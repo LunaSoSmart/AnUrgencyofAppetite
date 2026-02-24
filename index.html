@@ -288,7 +288,7 @@ footer{border-top:1px solid rgba(201,168,76,0.08);padding:3rem;text-align:center
 
 <section id="guestbook">
   <div class="section-header fade-in"><div class="section-label">Whispers</div><h2 class="section-title">留言板</h2><div class="section-line"></div>
-    <div class="section-flavor">在此留下你的低语，纵然理智消散，文字仍将铭刻于此。</div>
+    <div class="section-flavor">当我说起它时，我的双唇不会因寒冷而结霜。每次都是如此，令人惊讶。</div>
   </div>
   <div class="guestbook-form fade-in">
     <div class="guestbook-row">
@@ -374,6 +374,7 @@ footer{border-top:1px solid rgba(201,168,76,0.08);padding:3rem;text-align:center
   <div class="modal-box" style="max-width:550px">
     <div class="modal-title" id="csEditTitle">添加角色卡</div>
     <div class="modal-field"><label>角色姓名</label><input type="text" id="csName" placeholder="角色姓名"></div>
+    <div class="modal-field"><label>所属模组</label><input type="text" id="csModule" placeholder="东方快车上的恐怖"></div>
     <div class="modal-field"><label>角色头像</label><div class="editor-image-upload"><button class="upload-btn" onclick="document.getElementById('csAvatarInput').click()">选择图片</button><input type="file" id="csAvatarInput" accept="image/*" style="display:none"><span id="csAvatarInfo" class="upload-info"></span></div></div>
     <div class="modal-field"><label>职业</label><input type="text" id="csJob" placeholder="私家侦探、教授、记者..."></div>
     <div class="modal-field"><label>年龄</label><input type="text" id="csAge" placeholder="28"></div>
@@ -496,19 +497,28 @@ async function renderModules(){
   g.innerHTML=h;observeFadeIn()
 }
 
-function renderTeam(){
-  document.getElementById('teamGrid').innerHTML=members.map(m=>{
+async function renderTeam(){
+  let html='';
+  for(const m of members){
     const eb=isLoggedIn()?`<button class="edit-member-btn" onclick="event.stopPropagation();openEditModal('${m.id}')">编辑 ✎</button>`:'';
-    return `<div class="member-card fade-in" onclick="openCharSheet('members','${m.id}')" style="cursor:pointer">${eb}<div class="member-avatar">${m.avatarUrl?`<img src="${m.avatarUrl}">`:`<span class="avatar-placeholder">${esc(m.initial||'?')}</span>`}</div><div class="member-name">${esc(m.name)}</div><div class="member-role">${esc(m.role)}</div><div class="member-bio">${esc(m.bio)}</div></div>`
-  }).join('');observeFadeIn()
+    let countSnap;try{countSnap=await db.collection('members').doc(m.id).collection('characters').get()}catch{countSnap={size:0}}
+    const cnt=countSnap.size;
+    const cntHtml=cnt>0?`<div style="font-family:var(--font-ui);font-size:0.65rem;color:var(--gold-dim);margin-top:0.8rem;opacity:0.7">${cnt} 次入梦</div>`:'';
+    html+=`<div class="member-card fade-in" onclick="openCharSheet('members','${m.id}')" style="cursor:pointer">${eb}<div class="member-avatar">${m.avatarUrl?`<img src="${m.avatarUrl}">`:`<span class="avatar-placeholder">${esc(m.initial||'?')}</span>`}</div><div class="member-name">${esc(m.name)}</div><div class="member-role">${esc(m.role)}</div><div class="member-bio">${esc(m.bio)}</div>${cntHtml}</div>`;
+  }
+  document.getElementById('teamGrid').innerHTML=html;observeFadeIn()
 }
 
-function renderGuests(){
-  let h=guests.map(g=>{
+async function renderGuests(){
+  let h='';
+  for(const g of guests){
     const rb=isLoggedIn()?`<button class="guest-remove" onclick="event.stopPropagation();removeGuest('${g.id}')">×</button>`:'';
     const eb=isLoggedIn()?`<button class="guest-edit-btn" onclick="event.stopPropagation();openEditGuestModal('${g.id}')">✎</button>`:'';
-    return `<div class="guest-card" onclick="openCharSheet('guests','${g.id}')" style="cursor:pointer">${rb}${eb}<div class="guest-avatar">${g.avatarUrl?`<img src="${g.avatarUrl}">`:`<span class="guest-avatar-placeholder">✦</span>`}</div><div class="guest-name">${esc(g.name)}</div></div>`
-  }).join('');
+    let countSnap;try{countSnap=await db.collection('guests').doc(g.id).collection('characters').get()}catch{countSnap={size:0}}
+    const cnt=countSnap.size;
+    const cntHtml=cnt>0?`<div style="font-family:var(--font-ui);font-size:0.6rem;color:var(--gold-dim);margin-top:0.4rem;opacity:0.6">${cnt} 次入梦</div>`:'';
+    h+=`<div class="guest-card" onclick="openCharSheet('guests','${g.id}')" style="cursor:pointer">${rb}${eb}<div class="guest-avatar">${g.avatarUrl?`<img src="${g.avatarUrl}">`:`<span class="guest-avatar-placeholder">✦</span>`}</div><div class="guest-name">${esc(g.name)}</div>${cntHtml}</div>`;
+  }
   if(isLoggedIn())h+=`<div class="add-guest-card" onclick="openGuestModal()"><div class="add-icon">+</div><div class="add-text">添加客座</div></div>`;
   document.getElementById('guestGrid').innerHTML=h
 }
@@ -539,7 +549,7 @@ function renderOneCard(c,canEdit){
   return `<div class="cs-card-wrapper">${actions}
     <div class="cs-card"><div class="cs-card-border"></div><div class="cs-card-corner tl"></div><div class="cs-card-corner tr"></div><div class="cs-card-corner bl"></div><div class="cs-card-corner br"></div>
       <div class="cs-top"><div class="cs-portrait">${c.avatarUrl?`<img src="${c.avatarUrl}">`:'<span class="cs-portrait-ph">⍟</span>'}</div>
-        <div class="cs-info"><div class="cs-char-name">${esc(c.charName||'未命名')}</div><div class="cs-char-title">Investigator</div>
+        <div class="cs-info"><div class="cs-char-name">${esc(c.charName||'未命名')}</div><div class="cs-char-title">${c.moduleName?esc(c.moduleName):'Investigator'}</div>
           <div class="cs-info-grid">
             <div class="cs-info-item"><span class="cs-info-label">职业</span><span class="cs-info-val">${esc(c.job||'—')}</span></div>
             <div class="cs-info-item"><span class="cs-info-label">年龄</span><span class="cs-info-val">${esc(c.age||'—')}</span></div>
@@ -563,7 +573,7 @@ function openCsEditModal(editId){
     // find from current view - re-fetch
     db.collection(csCollection).doc(csOwnerId).collection('characters').doc(editId).get().then(d=>{
       if(!d.exists)return;const c=d.data();
-      document.getElementById('csName').value=c.charName||'';document.getElementById('csJob').value=c.job||'';
+      document.getElementById('csName').value=c.charName||'';document.getElementById('csModule').value=c.moduleName||'';document.getElementById('csJob').value=c.job||'';
       document.getElementById('csAge').value=c.age||'';document.getElementById('csHome').value=c.home||'';
       document.getElementById('csST').value=c.str||'';document.getElementById('csDX').value=c.dex||'';
       document.getElementById('csPW').value=c.pow||'';document.getElementById('csCN').value=c.con||'';
@@ -572,7 +582,7 @@ function openCsEditModal(editId){
       document.getElementById('csBio').value=c.backstory||'';
     });
   } else {
-    ['csName','csJob','csAge','csHome','csST','csDX','csPW','csCN','csAP','csED','csSZ','csIN','csBio'].forEach(id=>document.getElementById(id).value='');
+    ['csName','csModule','csJob','csAge','csHome','csST','csDX','csPW','csCN','csAP','csED','csSZ','csIN','csBio'].forEach(id=>document.getElementById(id).value='');
   }
   document.getElementById('csEditModal').classList.add('active');
 }
@@ -585,7 +595,7 @@ document.getElementById('csAvatarInput').addEventListener('change',async functio
 
 async function saveCharSheet(){
   if(!requireLogin())return;
-  const data={charName:document.getElementById('csName').value.trim(),job:document.getElementById('csJob').value.trim(),
+  const data={charName:document.getElementById('csName').value.trim(),moduleName:document.getElementById('csModule').value.trim(),job:document.getElementById('csJob').value.trim(),
     age:document.getElementById('csAge').value.trim(),home:document.getElementById('csHome').value.trim(),
     str:parseInt(document.getElementById('csST').value)||0,dex:parseInt(document.getElementById('csDX').value)||0,
     pow:parseInt(document.getElementById('csPW').value)||0,con:parseInt(document.getElementById('csCN').value)||0,
