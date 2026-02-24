@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>急切的食欲 — CoC跑团记录</title>
-<meta name="description" content="急切的食欲 — 克苏鲁的呼唤TRPG跑团记录与宣传站">
+<title>急切的食欲</title>
+<meta name="description" content="急切的食欲">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='28'>⍟</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -261,11 +261,11 @@ footer{border-top:1px solid rgba(201,168,76,0.08);padding:3rem;text-align:center
   <div class="hero-bg"></div>
   <div class="hero-sigil"></div>
   <div class="hero-content">
-    <div class="hero-subtitle-top">Call of Cthulhu · TRPG</div>
+    <div class="hero-subtitle-top">TRPG Static Group</div>
     <h1 class="hero-title">急切的食欲</h1>
-    <div class="hero-en">URGENT APPETITE</div>
+    <div class="hero-en">AN URGENCY OF APPETITE</div>
     <div class="hero-divider"></div>
-    <p class="hero-tagline">"那些不曾杀死我们的，必将使我们疯狂。"</p>
+    <p class="hero-tagline">"那些未能撕裂我们血肉的未知，正以急切的食欲，蚕食着我们的理智。"</p>
   </div>
   <a class="hero-scroll" onclick="scrollTo('#modules')">向下探索 ↓</a>
 </div>
@@ -273,7 +273,7 @@ footer{border-top:1px solid rgba(201,168,76,0.08);padding:3rem;text-align:center
 <!-- Modules -->
 <section id="modules">
   <div class="section-header fade-in">
-    <div class="section-label">Case Files</div>
+    <div class="section-label">Module Files</div>
     <h2 class="section-title">模组档案</h2>
     <div class="section-line"></div>
   </div>
@@ -502,18 +502,18 @@ function compressAvatar(file) {
 // ===== Default Data =====
 const DEFAULT_DATA = {
   modules: [
-    { id: 'orient-express', name: '东方快车上的恐怖', nameEn: 'Horror on the Orient Express', desc: '横跨欧洲的列车之旅，古老的碎片散落在沿途的每一座城市。旅途中潜伏的恐怖远比乘客们想象的更加深邃。' },
-    { id: 'king-in-yellow', name: '褴褛之王', nameEn: 'The King in Yellow', desc: '黄色的面具之下隐藏着怎样的面容？卡尔科萨的影子正在蔓延，而那部禁忌的剧本已经被翻开。' },
-    { id: 'stubborn', name: '有些人油盐不进', nameEn: 'Some People Just Won\'t Listen', desc: '并非所有的谜团都来自远古的存在。有时候，最可怕的是那些执拗到底的凡人心灵。' }
+    { id: 'orient-express', name: '东方快车上的恐怖', nameEn: 'Horror on the Orient Express', desc: '横跨欧洲的列车之旅，古老的雕像碎片散落在沿途的每一座城市。旅途中潜伏的恐怖远比乘客们想象的更加深邃。' },
+    { id: 'king-in-yellow', name: '褴褛之王', nameEn: 'The King in Yellow', desc: '黄色的面具之下隐藏着怎样的面容？在历史的夹缝与阴影中，与那位编织了无数悲剧的莎士比亚隔着时空静默对望。' },
+    { id: 'stubborn', name: '有些人油盐不进', nameEn: 'and Some Fell On Stony Ground', desc: '理智是脆弱的壁垒，而有些灵魂却如同顽石般拒绝启示。在凡俗的执拗与深渊的凝视之间，调查员们正走向未知的结局。' }
   ],
   members: [
-    { id: 1, name: '团员一', role: 'Keeper', bio: '守秘人，负责编织疯狂的故事', initial: 'I' },
-    { id: 2, name: '团员二', role: 'Investigator', bio: '资深调查员，擅长理性分析', initial: 'II' },
-    { id: 3, name: '团员三', role: 'Investigator', bio: '热衷于探索禁忌知识', initial: 'III' },
-    { id: 4, name: '团员四', role: 'Investigator', bio: '每次都能在关键时刻大失败', initial: 'IV' },
-    { id: 5, name: '团员五', role: 'Investigator', bio: '坚信理性能战胜一切', initial: 'V' }
+    { id: 1, name: '灯花', role: '秘史', bio: '历史是时间在世界身上留下的伤疤', initial: 'I' },
+    { id: 2, name: '流奈', role: '启', bio: '启不允许封闭和孤立存在，它欢快地将我们推出无知的庇护', initial: 'II' },
+    { id: 3, name: '冬日', role: '冬', bio: '冬是静默、终结和不尽然逝去之物的准则', initial: 'III' },
+    { id: 4, name: '君商', role: '杯', bio: '食、色、性，有溺而无还者也', initial: 'IV' },
+    { id: 5, name: '凤凰', role: '心', bio: '为了保护我们所知世界的表皮，不息之心无尽地搏动着', initial: 'V' }
   ],
-  guests: ['Guest A', 'Guest B']
+  guests: ['小樱', '']
 };
 
 // ===== App State =====
