@@ -141,25 +141,52 @@ section{padding:6rem 3rem;max-width:1200px;margin:0 auto}
 .add-guest-card:hover{border-color:var(--gold);background:rgba(201,168,76,0.02)}
 .add-guest-card .add-icon{font-size:1.2rem;color:var(--gold-dim);margin-bottom:0.5rem}
 .add-guest-card .add-text{font-family:var(--font-ui);font-size:0.7rem;color:var(--gold-dim)}
-.gallery-upload-area{border:1px dashed rgba(201,168,76,0.2);padding:3rem;text-align:center;margin-bottom:2rem;cursor:pointer;transition:all 0.3s}
-.gallery-upload-area:hover{border-color:var(--gold);background:rgba(201,168,76,0.02)}
-.gallery-upload-area.dragover{border-color:var(--gold-bright);background:rgba(201,168,76,0.05)}
-.gallery-upload-area.disabled{opacity:0.4;cursor:not-allowed}
-.gallery-upload-area.disabled:hover{border-color:rgba(201,168,76,0.2);background:transparent}
-.gallery-upload-icon{font-size:2rem;color:var(--gold-dim);margin-bottom:1rem}
-.gallery-upload-text{font-family:var(--font-ui);font-size:0.8rem;color:var(--ivory-dim)}
-.gallery-upload-hint{font-family:var(--font-ui);font-size:0.65rem;color:rgba(168,158,142,0.5);margin-top:0.5rem}
-.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem}
-.gallery-item{aspect-ratio:4/3;overflow:hidden;border:1px solid rgba(201,168,76,0.08);position:relative;cursor:pointer}
-.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s}
-.gallery-item:hover img{transform:scale(1.05)}
-.gallery-item-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,9,8,0.8),transparent 50%);opacity:0;transition:opacity 0.3s;display:flex;align-items:flex-end;padding:1rem}
-.gallery-item:hover .gallery-item-overlay{opacity:1}
-.gallery-item-info{flex:1}
-.gallery-item-caption{font-family:var(--font-ui);font-size:0.75rem;color:var(--ivory);display:block}
-.gallery-item-author{font-family:var(--font-ui);font-size:0.6rem;color:var(--ivory-dim);opacity:0.7;margin-top:0.2rem;display:block}
-.gallery-item-delete{background:none;border:none;color:var(--red-blood);font-size:0.7rem;cursor:pointer;font-family:var(--font-ui);padding:0.3rem 0.5rem}
-.gallery-item-delete:hover{color:var(--red-glow)}
+/* Character Sheet */
+.cs-overlay{display:none;position:fixed;inset:0;z-index:2000;background:var(--bg-deep);overflow-y:auto}
+.cs-overlay.active{display:block}
+.cs-header{padding:2rem 3rem;border-bottom:1px solid rgba(201,168,76,0.1);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:rgba(10,9,8,0.97);backdrop-filter:blur(10px);z-index:10}
+.cs-back{font-family:var(--font-ui);font-size:0.8rem;color:var(--gold-dim);cursor:pointer;background:none;border:1px solid rgba(201,168,76,0.2);padding:0.5rem 1.2rem;transition:all 0.3s}
+.cs-back:hover{border-color:var(--gold);color:var(--gold)}
+.cs-body{max-width:800px;margin:0 auto;padding:3rem 2rem}
+.cs-card{position:relative}
+.cs-card-border{position:absolute;inset:-1px;border:1px solid rgba(201,168,76,0.15);pointer-events:none}
+.cs-card-corner{position:absolute;width:20px;height:20px;border-color:var(--gold-dim);border-style:solid}
+.cs-card-corner.tl{top:-1px;left:-1px;border-width:2px 0 0 2px}
+.cs-card-corner.tr{top:-1px;right:-1px;border-width:2px 2px 0 0}
+.cs-card-corner.bl{bottom:-1px;left:-1px;border-width:0 0 2px 2px}
+.cs-card-corner.br{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
+.cs-top{display:flex;gap:2rem;margin-bottom:2.5rem;align-items:flex-start}
+.cs-portrait{width:140px;height:180px;border:2px solid rgba(201,168,76,0.2);background:var(--bg-deep);flex-shrink:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.cs-portrait img{width:100%;height:100%;object-fit:cover}
+.cs-portrait-ph{font-family:var(--font-display);font-size:3rem;color:var(--gold-dim);opacity:0.3}
+.cs-info{flex:1}
+.cs-char-name{font-family:var(--font-cn);font-size:1.8rem;font-weight:900;color:var(--gold);margin-bottom:0.3rem;letter-spacing:0.05em}
+.cs-char-title{font-family:var(--font-display);font-size:0.7rem;letter-spacing:0.3em;color:var(--gold-dim);text-transform:uppercase;margin-bottom:1.5rem}
+.cs-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem 2rem}
+.cs-info-item{display:flex;align-items:baseline;gap:0.5rem}
+.cs-info-label{font-family:var(--font-display);font-size:0.6rem;letter-spacing:0.2em;color:var(--gold-dim);text-transform:uppercase;white-space:nowrap}
+.cs-info-val{font-family:var(--font-ui);font-size:0.85rem;color:var(--ivory)}
+.cs-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.2),transparent);margin:2rem 0}
+.cs-stats-title{font-family:var(--font-display);font-size:0.65rem;letter-spacing:0.4em;color:var(--gold-dim);text-transform:uppercase;text-align:center;margin-bottom:1.5rem}
+.cs-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.cs-stat{text-align:center;background:var(--bg-deep);border:1px solid rgba(201,168,76,0.1);padding:1rem 0.5rem;position:relative}
+.cs-stat-label{font-family:var(--font-display);font-size:0.55rem;letter-spacing:0.25em;color:var(--gold-dim);text-transform:uppercase;margin-bottom:0.5rem}
+.cs-stat-val{font-family:var(--font-display);font-size:1.6rem;font-weight:700;color:var(--gold)}
+.cs-stat-bar{position:absolute;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--gold-dim),var(--gold));transition:width 0.6s}
+.cs-backstory{margin-top:0}
+.cs-backstory-title{font-family:var(--font-display);font-size:0.65rem;letter-spacing:0.4em;color:var(--gold-dim);text-transform:uppercase;text-align:center;margin-bottom:1.5rem}
+.cs-backstory-text{font-family:var(--font-body);font-size:1rem;color:var(--ivory-dim);line-height:2;white-space:pre-wrap}
+.cs-empty{text-align:center;padding:3rem;color:var(--ivory-dim);opacity:0.5;font-family:var(--font-ui);font-size:0.85rem}
+.cs-add-btn{display:block;width:100%;padding:1rem;background:transparent;border:1px dashed rgba(201,168,76,0.25);color:var(--gold-dim);font-family:var(--font-ui);font-size:0.85rem;cursor:pointer;transition:all 0.3s;margin-bottom:1.5rem}
+.cs-add-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.03)}
+.cs-add-btn:disabled{opacity:0.4;cursor:not-allowed}
+.cs-card-wrapper{background:var(--bg-card);border:1px solid rgba(201,168,76,0.1);padding:2.5rem;margin-bottom:2rem;position:relative}
+.cs-card-actions{position:absolute;top:1rem;right:1rem;display:flex;gap:0.5rem}
+.cs-card-edit,.cs-card-del{background:none;border:none;font-family:var(--font-ui);font-size:0.65rem;cursor:pointer;opacity:0;transition:opacity 0.3s}
+.cs-card-edit{color:var(--gold-dim)}.cs-card-edit:hover{color:var(--gold)}
+.cs-card-del{color:var(--red-blood)}.cs-card-del:hover{color:var(--red-glow)}
+.cs-card-wrapper:hover .cs-card-edit,.cs-card-wrapper:hover .cs-card-del{opacity:0.8}
+@media(max-width:600px){.cs-top{flex-direction:column;align-items:center;text-align:center}.cs-portrait{width:120px;height:150px}.cs-info-grid{grid-template-columns:1fr}.cs-stats-grid{grid-template-columns:repeat(2,1fr)}}
 .data-management{border-top:1px solid rgba(201,168,76,0.08);padding-top:2rem;margin-top:2rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
 .data-btn{padding:0.5rem 1.2rem;background:transparent;border:1px solid rgba(201,168,76,0.15);color:var(--gold-dim);font-family:var(--font-ui);font-size:0.7rem;cursor:pointer;transition:all 0.3s}
 .data-btn:hover{border-color:var(--gold);color:var(--gold)}
@@ -220,7 +247,6 @@ footer{border-top:1px solid rgba(201,168,76,0.08);padding:3rem;text-align:center
     <ul class="nav-links" id="navLinks">
       <li><a onclick="goHome();scrollToEl('#modules');closeMobileNav()">模组档案</a></li>
       <li><a onclick="goHome();scrollToEl('#team');closeMobileNav()">团员</a></li>
-      <li><a onclick="goHome();scrollToEl('#gallery');closeMobileNav()">图库</a></li>
       <li><a onclick="goHome();scrollToEl('#guestbook');closeMobileNav()">留言板</a></li>
     </ul>
   </div>
@@ -258,17 +284,6 @@ footer{border-top:1px solid rgba(201,168,76,0.08);padding:3rem;text-align:center
     <div class="guest-flavor">那些曾短暂驻足于此，窥见漫宿一角的旅人。</div>
     <div class="guest-grid" id="guestGrid"></div>
   </div>
-</section>
-
-<section id="gallery">
-  <div class="section-header fade-in"><div class="section-label">Archives</div><h2 class="section-title">图库</h2><div class="section-line"></div></div>
-  <div class="gallery-upload-area fade-in" id="galleryUpload">
-    <div class="gallery-upload-icon">✦</div>
-    <div class="gallery-upload-text" id="galleryUploadText">点击或拖拽上传图片至图库</div>
-    <div class="gallery-upload-hint">图片将自动压缩至适合网页的尺寸</div>
-    <input type="file" id="galleryFileInput" accept="image/*" style="display:none" multiple>
-  </div>
-  <div class="gallery-grid" id="galleryGrid"></div>
 </section>
 
 <section id="guestbook">
@@ -350,6 +365,36 @@ footer{border-top:1px solid rgba(201,168,76,0.08);padding:3rem;text-align:center
   </div>
 </div>
 
+<div class="cs-overlay" id="csOverlay">
+  <div class="cs-header"><button class="cs-back" onclick="closeCharSheet()">← 返回</button><div class="detail-title-text" id="csTitle">角色卡</div><div style="width:80px"></div></div>
+  <div class="cs-body" id="csBody"></div>
+</div>
+
+<div class="modal-overlay" id="csEditModal" onclick="if(event.target===this)closeCsEditModal()">
+  <div class="modal-box" style="max-width:550px">
+    <div class="modal-title" id="csEditTitle">添加角色卡</div>
+    <div class="modal-field"><label>角色姓名</label><input type="text" id="csName" placeholder="角色姓名"></div>
+    <div class="modal-field"><label>角色头像</label><div class="editor-image-upload"><button class="upload-btn" onclick="document.getElementById('csAvatarInput').click()">选择图片</button><input type="file" id="csAvatarInput" accept="image/*" style="display:none"><span id="csAvatarInfo" class="upload-info"></span></div></div>
+    <div class="modal-field"><label>职业</label><input type="text" id="csJob" placeholder="私家侦探、教授、记者..."></div>
+    <div class="modal-field"><label>年龄</label><input type="text" id="csAge" placeholder="28"></div>
+    <div class="modal-field"><label>住地</label><input type="text" id="csHome" placeholder="阿卡姆"></div>
+    <div style="margin-bottom:1.2rem"><label style="font-family:var(--font-ui);font-size:0.7rem;letter-spacing:0.12em;color:var(--gold-dim);text-transform:uppercase;display:block;margin-bottom:0.8rem">六围属性</label>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.5rem">
+        <div><label style="font-size:0.6rem;color:var(--gold-dim);font-family:var(--font-display);letter-spacing:0.1em">STR</label><input type="number" id="csST" style="width:100%;background:var(--bg-deep);border:1px solid rgba(201,168,76,0.15);color:var(--ivory);font-family:var(--font-ui);padding:0.4rem;text-align:center;outline:none" min="1" max="99"></div>
+        <div><label style="font-size:0.6rem;color:var(--gold-dim);font-family:var(--font-display);letter-spacing:0.1em">DEX</label><input type="number" id="csDX" style="width:100%;background:var(--bg-deep);border:1px solid rgba(201,168,76,0.15);color:var(--ivory);font-family:var(--font-ui);padding:0.4rem;text-align:center;outline:none" min="1" max="99"></div>
+        <div><label style="font-size:0.6rem;color:var(--gold-dim);font-family:var(--font-display);letter-spacing:0.1em">POW</label><input type="number" id="csPW" style="width:100%;background:var(--bg-deep);border:1px solid rgba(201,168,76,0.15);color:var(--ivory);font-family:var(--font-ui);padding:0.4rem;text-align:center;outline:none" min="1" max="99"></div>
+        <div><label style="font-size:0.6rem;color:var(--gold-dim);font-family:var(--font-display);letter-spacing:0.1em">CON</label><input type="number" id="csCN" style="width:100%;background:var(--bg-deep);border:1px solid rgba(201,168,76,0.15);color:var(--ivory);font-family:var(--font-ui);padding:0.4rem;text-align:center;outline:none" min="1" max="99"></div>
+        <div><label style="font-size:0.6rem;color:var(--gold-dim);font-family:var(--font-display);letter-spacing:0.1em">APP</label><input type="number" id="csAP" style="width:100%;background:var(--bg-deep);border:1px solid rgba(201,168,76,0.15);color:var(--ivory);font-family:var(--font-ui);padding:0.4rem;text-align:center;outline:none" min="1" max="99"></div>
+        <div><label style="font-size:0.6rem;color:var(--gold-dim);font-family:var(--font-display);letter-spacing:0.1em">EDU</label><input type="number" id="csED" style="width:100%;background:var(--bg-deep);border:1px solid rgba(201,168,76,0.15);color:var(--ivory);font-family:var(--font-ui);padding:0.4rem;text-align:center;outline:none" min="1" max="99"></div>
+        <div><label style="font-size:0.6rem;color:var(--gold-dim);font-family:var(--font-display);letter-spacing:0.1em">SIZ</label><input type="number" id="csSZ" style="width:100%;background:var(--bg-deep);border:1px solid rgba(201,168,76,0.15);color:var(--ivory);font-family:var(--font-ui);padding:0.4rem;text-align:center;outline:none" min="1" max="99"></div>
+        <div><label style="font-size:0.6rem;color:var(--gold-dim);font-family:var(--font-display);letter-spacing:0.1em">INT</label><input type="number" id="csIN" style="width:100%;background:var(--bg-deep);border:1px solid rgba(201,168,76,0.15);color:var(--ivory);font-family:var(--font-ui);padding:0.4rem;text-align:center;outline:none" min="1" max="99"></div>
+      </div>
+    </div>
+    <div class="modal-field"><label>背景故事</label><textarea id="csBio" style="min-height:120px" placeholder="这位调查员的过往..."></textarea></div>
+    <div class="modal-actions"><button class="btn-cancel" onclick="closeCsEditModal()">取消</button><button class="btn-publish" id="csSaveBtn" onclick="saveCharSheet()">保存</button></div>
+  </div>
+</div>
+
 <div class="lightbox" id="lightbox" onclick="closeLightbox()"><img id="lightboxImg" src=""></div>
 <div class="toast" id="toast"></div>
 
@@ -378,9 +423,6 @@ function restoreSession(){try{const s=sessionStorage.getItem('ua-session');if(s&
 function updateAuthUI(){
   const u=document.getElementById('navUser'),b=document.getElementById('navAuthBtn');
   if(isLoggedIn()){u.textContent=currentUser;b.textContent='登出'}else{u.textContent='';b.textContent='登录'}
-  const gU=document.getElementById('galleryUpload'),gT=document.getElementById('galleryUploadText');
-  if(isLoggedIn()){gU.classList.remove('disabled');gT.textContent='点击或拖拽上传图片至图库'}
-  else{gU.classList.add('disabled');gT.textContent='登录后可上传图片'}
 }
 function handleAuth(){
   if(isLoggedIn()){currentUser=null;try{sessionStorage.removeItem('ua-session')}catch{}updateAuthUI();renderAll();showToast('已登出')}
@@ -418,7 +460,7 @@ const DEF_MEMBERS=[
 const DEF_GUESTS=[{id:'g1',name:'小樱'}];
 
 // ===== STATE =====
-let modules=[],members=[],guests=[],galleryImages=[];
+let modules=[],members=[],guests=[];
 let currentModuleId=null,currentEditMemberId=null,currentEditGuestId=null,currentArticles=[];
 
 // ===== DB OPS =====
@@ -437,7 +479,6 @@ async function loadModules(){const s=await db.collection('modules').orderBy('ord
 async function loadMembers(){const s=await db.collection('members').orderBy('order').get();members=s.docs.map(d=>({id:d.id,...d.data()}))}
 async function loadGuests(){const s=await db.collection('guests').get();guests=s.docs.map(d=>({id:d.id,...d.data()}))}
 async function loadArticles(mid){const s=await db.collection('modules').doc(mid).collection('articles').orderBy('timestamp','desc').get();return s.docs.map(d=>({id:d.id,...d.data()}))}
-async function loadGallery(){const s=await db.collection('gallery').orderBy('timestamp','desc').get();galleryImages=s.docs.map(d=>({id:d.id,...d.data()}))}
 async function countArticles(mid){return(await db.collection('modules').doc(mid).collection('articles').get()).size}
 
 // ===== TOAST =====
@@ -445,7 +486,7 @@ function showToast(msg){const t=document.getElementById('toast');t.textContent=m
 
 // ===== RENDER =====
 function esc(s){const d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
-function renderAll(){renderModules();renderTeam();renderGuests();renderGallery()}
+function renderAll(){renderModules();renderTeam();renderGuests()}
 
 async function renderModules(){
   const g=document.getElementById('modulesGrid');let h='';
@@ -458,7 +499,7 @@ async function renderModules(){
 function renderTeam(){
   document.getElementById('teamGrid').innerHTML=members.map(m=>{
     const eb=isLoggedIn()?`<button class="edit-member-btn" onclick="event.stopPropagation();openEditModal('${m.id}')">编辑 ✎</button>`:'';
-    return `<div class="member-card fade-in">${eb}<div class="member-avatar">${m.avatarUrl?`<img src="${m.avatarUrl}">`:`<span class="avatar-placeholder">${esc(m.initial||'?')}</span>`}</div><div class="member-name">${esc(m.name)}</div><div class="member-role">${esc(m.role)}</div><div class="member-bio">${esc(m.bio)}</div></div>`
+    return `<div class="member-card fade-in" onclick="openCharSheet('members','${m.id}')" style="cursor:pointer">${eb}<div class="member-avatar">${m.avatarUrl?`<img src="${m.avatarUrl}">`:`<span class="avatar-placeholder">${esc(m.initial||'?')}</span>`}</div><div class="member-name">${esc(m.name)}</div><div class="member-role">${esc(m.role)}</div><div class="member-bio">${esc(m.bio)}</div></div>`
   }).join('');observeFadeIn()
 }
 
@@ -466,17 +507,104 @@ function renderGuests(){
   let h=guests.map(g=>{
     const rb=isLoggedIn()?`<button class="guest-remove" onclick="event.stopPropagation();removeGuest('${g.id}')">×</button>`:'';
     const eb=isLoggedIn()?`<button class="guest-edit-btn" onclick="event.stopPropagation();openEditGuestModal('${g.id}')">✎</button>`:'';
-    return `<div class="guest-card">${rb}${eb}<div class="guest-avatar">${g.avatarUrl?`<img src="${g.avatarUrl}">`:`<span class="guest-avatar-placeholder">✦</span>`}</div><div class="guest-name">${esc(g.name)}</div></div>`
+    return `<div class="guest-card" onclick="openCharSheet('guests','${g.id}')" style="cursor:pointer">${rb}${eb}<div class="guest-avatar">${g.avatarUrl?`<img src="${g.avatarUrl}">`:`<span class="guest-avatar-placeholder">✦</span>`}</div><div class="guest-name">${esc(g.name)}</div></div>`
   }).join('');
   if(isLoggedIn())h+=`<div class="add-guest-card" onclick="openGuestModal()"><div class="add-icon">+</div><div class="add-text">添加客座</div></div>`;
   document.getElementById('guestGrid').innerHTML=h
 }
 
-function renderGallery(){
-  document.getElementById('galleryGrid').innerHTML=galleryImages.map(img=>{
-    const del=isLoggedIn()?`<button class="gallery-item-delete" onclick="event.stopPropagation();deleteGalleryImage('${img.id}','${img.storagePath||''}')">删除</button>`:'';
-    return `<div class="gallery-item"><img src="${img.url}" alt="${esc(img.caption||'')}" onclick="openLightboxUrl('${img.url}')"><div class="gallery-item-overlay"><div class="gallery-item-info"><span class="gallery-item-caption">${esc(img.caption||'')}</span>${img.author?`<span class="gallery-item-author">by ${esc(img.author)}</span>`:''}</div>${del}</div></div>`
-  }).join('')
+// ===== CHARACTER SHEET =====
+let csCollection=null,csOwnerId=null;
+
+async function openCharSheet(col,ownerId){
+  csCollection=col;csOwnerId=ownerId;
+  const owner=col==='members'?members.find(m=>m.id===ownerId):guests.find(g=>g.id===ownerId);
+  if(!owner)return;
+  document.getElementById('csTitle').textContent=owner.name+' — 角色卡';
+  showToast('加载中...');
+  const snap=await db.collection(col).doc(ownerId).collection('characters').orderBy('timestamp','desc').get();
+  const chars=snap.docs.map(d=>({id:d.id,...d.data()}));
+  const body=document.getElementById('csBody');
+  const canEdit=isLoggedIn();
+  let h=canEdit?`<button class="cs-add-btn" onclick="openCsEditModal()">✦ 添加角色卡</button>`:`<button class="cs-add-btn" disabled>✦ 登录后可添加角色卡</button>`;
+  if(chars.length===0)h+=`<div class="cs-empty">尚未创建角色卡，点击上方按钮创建。</div>`;
+  else h+=chars.map(c=>renderOneCard(c,canEdit)).join('');
+  body.innerHTML=h;
+  document.getElementById('csOverlay').classList.add('active');document.body.style.overflow='hidden';
+}
+
+function renderOneCard(c,canEdit){
+  const stats=[{k:'STR',v:c.str},{k:'DEX',v:c.dex},{k:'POW',v:c.pow},{k:'CON',v:c.con},{k:'APP',v:c.app},{k:'EDU',v:c.edu},{k:'SIZ',v:c.siz},{k:'INT',v:c.int}];
+  const actions=canEdit?`<div class="cs-card-actions"><button class="cs-card-edit" onclick="event.stopPropagation();openCsEditModal('${c.id}')">编辑</button><button class="cs-card-del" onclick="event.stopPropagation();deleteCharSheet('${c.id}','${c.avatarPath||''}')">删除</button></div>`:'';
+  return `<div class="cs-card-wrapper">${actions}
+    <div class="cs-card"><div class="cs-card-border"></div><div class="cs-card-corner tl"></div><div class="cs-card-corner tr"></div><div class="cs-card-corner bl"></div><div class="cs-card-corner br"></div>
+      <div class="cs-top"><div class="cs-portrait">${c.avatarUrl?`<img src="${c.avatarUrl}">`:'<span class="cs-portrait-ph">⍟</span>'}</div>
+        <div class="cs-info"><div class="cs-char-name">${esc(c.charName||'未命名')}</div><div class="cs-char-title">Investigator</div>
+          <div class="cs-info-grid">
+            <div class="cs-info-item"><span class="cs-info-label">职业</span><span class="cs-info-val">${esc(c.job||'—')}</span></div>
+            <div class="cs-info-item"><span class="cs-info-label">年龄</span><span class="cs-info-val">${esc(c.age||'—')}</span></div>
+            <div class="cs-info-item"><span class="cs-info-label">住地</span><span class="cs-info-val">${esc(c.home||'—')}</span></div>
+          </div></div></div>
+      <div class="cs-divider"></div>
+      <div class="cs-stats-title">CHARACTERISTICS</div>
+      <div class="cs-stats-grid">${stats.map(s=>`<div class="cs-stat"><div class="cs-stat-label">${s.k}</div><div class="cs-stat-val">${s.v||'—'}</div><div class="cs-stat-bar" style="width:${Math.min(100,(s.v||0))}%"></div></div>`).join('')}</div>
+      ${c.backstory?`<div class="cs-divider"></div><div class="cs-backstory"><div class="cs-backstory-title">BACKSTORY</div><div class="cs-backstory-text">${esc(c.backstory)}</div></div>`:''}
+    </div></div>`;
+}
+
+function closeCharSheet(){document.getElementById('csOverlay').classList.remove('active');document.body.style.overflow='';csCollection=null;csOwnerId=null}
+
+let csEditId=null,csPendingAvatar=null;
+function openCsEditModal(editId){
+  if(!requireLogin())return;csEditId=editId||null;csPendingAvatar=null;
+  document.getElementById('csEditTitle').textContent=editId?'编辑角色卡':'添加角色卡';
+  document.getElementById('csAvatarInfo').textContent='';document.getElementById('csAvatarInput').value='';
+  if(editId){
+    // find from current view - re-fetch
+    db.collection(csCollection).doc(csOwnerId).collection('characters').doc(editId).get().then(d=>{
+      if(!d.exists)return;const c=d.data();
+      document.getElementById('csName').value=c.charName||'';document.getElementById('csJob').value=c.job||'';
+      document.getElementById('csAge').value=c.age||'';document.getElementById('csHome').value=c.home||'';
+      document.getElementById('csST').value=c.str||'';document.getElementById('csDX').value=c.dex||'';
+      document.getElementById('csPW').value=c.pow||'';document.getElementById('csCN').value=c.con||'';
+      document.getElementById('csAP').value=c.app||'';document.getElementById('csED').value=c.edu||'';
+      document.getElementById('csSZ').value=c.siz||'';document.getElementById('csIN').value=c.int||'';
+      document.getElementById('csBio').value=c.backstory||'';
+    });
+  } else {
+    ['csName','csJob','csAge','csHome','csST','csDX','csPW','csCN','csAP','csED','csSZ','csIN','csBio'].forEach(id=>document.getElementById(id).value='');
+  }
+  document.getElementById('csEditModal').classList.add('active');
+}
+function closeCsEditModal(){document.getElementById('csEditModal').classList.remove('active');csEditId=null;csPendingAvatar=null}
+
+document.getElementById('csAvatarInput').addEventListener('change',async function(){
+  if(this.files[0]){document.getElementById('csAvatarInfo').textContent='压缩中...';
+    try{csPendingAvatar=await compressImage(this.files[0],400,0.8);document.getElementById('csAvatarInfo').textContent='已选择'}catch{document.getElementById('csAvatarInfo').textContent='失败'}}
+});
+
+async function saveCharSheet(){
+  if(!requireLogin())return;
+  const data={charName:document.getElementById('csName').value.trim(),job:document.getElementById('csJob').value.trim(),
+    age:document.getElementById('csAge').value.trim(),home:document.getElementById('csHome').value.trim(),
+    str:parseInt(document.getElementById('csST').value)||0,dex:parseInt(document.getElementById('csDX').value)||0,
+    pow:parseInt(document.getElementById('csPW').value)||0,con:parseInt(document.getElementById('csCN').value)||0,
+    app:parseInt(document.getElementById('csAP').value)||0,edu:parseInt(document.getElementById('csED').value)||0,
+    siz:parseInt(document.getElementById('csSZ').value)||0,int:parseInt(document.getElementById('csIN').value)||0,
+    backstory:document.getElementById('csBio').value.trim()};
+  if(!data.charName){showToast('请输入角色姓名');return}
+  const btn=document.getElementById('csSaveBtn');btn.disabled=true;btn.textContent='保存中...';
+  try{
+    if(csPendingAvatar){const p=`charsheets/${csOwnerId}/${Date.now()}.jpg`;data.avatarUrl=await uploadImg(p,csPendingAvatar);data.avatarPath=p}
+    if(csEditId){await db.collection(csCollection).doc(csOwnerId).collection('characters').doc(csEditId).update(data)}
+    else{data.timestamp=firebase.firestore.FieldValue.serverTimestamp();await db.collection(csCollection).doc(csOwnerId).collection('characters').add(data)}
+    closeCsEditModal();showToast('已保存');openCharSheet(csCollection,csOwnerId);
+  }catch(e){showToast('失败: '+e.message)}finally{btn.disabled=false;btn.textContent='保存'}
+}
+
+async function deleteCharSheet(cid,imgPath){
+  if(!requireLogin()||!confirm('删除此角色卡？'))return;
+  try{await db.collection(csCollection).doc(csOwnerId).collection('characters').doc(cid).delete();if(imgPath)await deleteImg(imgPath);showToast('已删除');openCharSheet(csCollection,csOwnerId)}catch(e){showToast('失败: '+e.message)}
 }
 
 // ===== MODULE DETAIL =====
@@ -574,31 +702,13 @@ async function saveEditGuest(){
   try{await db.collection('guests').doc(currentEditGuestId).update(u);await loadGuests();renderGuests();closeEditGuestModal();showToast('已保存')}catch(e){showToast('失败: '+e.message)}
 }
 
-// ===== GALLERY =====
-const gUpload=document.getElementById('galleryUpload'),gFInput=document.getElementById('galleryFileInput');
-gUpload.addEventListener('click',()=>{if(!isLoggedIn()){showToast('请先登录');openLoginModal();return}gFInput.click()});
-gUpload.addEventListener('dragover',e=>{e.preventDefault();if(isLoggedIn())gUpload.classList.add('dragover')});
-gUpload.addEventListener('dragleave',()=>gUpload.classList.remove('dragover'));
-gUpload.addEventListener('drop',e=>{e.preventDefault();gUpload.classList.remove('dragover');if(!isLoggedIn()){showToast('请先登录');return}handleGalleryFiles(e.dataTransfer.files)});
-gFInput.addEventListener('change',function(){handleGalleryFiles(this.files)});
-
-async function handleGalleryFiles(files){
-  if(!requireLogin())return;
-  for(const file of files){if(!file.type.startsWith('image/'))continue;
-    try{showToast('压缩上传中...');const c=await compressImage(file,1400,0.8);const id='g'+Date.now()+Math.random().toString(36).slice(2,6);const p=`gallery/${id}.jpg`;const url=await uploadImg(p,c);
-      await db.collection('gallery').doc(id).set({url,storagePath:p,caption:file.name.replace(/\.[^.]+$/,''),author:getCurrentUser(),timestamp:firebase.firestore.FieldValue.serverTimestamp()});
-      await loadGallery();renderGallery();showToast('上传成功')}catch(e){showToast('失败: '+e.message)}}
-}
-async function deleteGalleryImage(did,sp){if(!requireLogin()||!confirm('删除？'))return;try{await db.collection('gallery').doc(did).delete();if(sp)await deleteImg(sp);await loadGallery();renderGallery();showToast('已删除')}catch(e){showToast('失败: '+e.message)}}
-
 // ===== EXPORT/IMPORT =====
 async function exportData(){
   showToast('导出中...');
-  try{const exp={modules:[],members:[],guests:[],gallery:[]};
+  try{const exp={modules:[],members:[],guests:[]};
     for(const doc of(await db.collection('modules').get()).docs){const m={id:doc.id,...doc.data(),articles:[]};const as=await db.collection('modules').doc(doc.id).collection('articles').orderBy('timestamp','desc').get();m.articles=as.docs.map(d=>({id:d.id,...d.data()}));exp.modules.push(m)}
     exp.members=(await db.collection('members').get()).docs.map(d=>({id:d.id,...d.data()}));
     exp.guests=(await db.collection('guests').get()).docs.map(d=>({id:d.id,...d.data()}));
-    exp.gallery=(await db.collection('gallery').get()).docs.map(d=>({id:d.id,...d.data()}));
     const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(exp,null,2)],{type:'application/json'}));a.download=`急切的食欲_backup_${new Date().toISOString().slice(0,10)}.json`;a.click();showToast('导出成功')
   }catch(e){showToast('失败: '+e.message)}
 }
@@ -609,14 +719,13 @@ async function importData(inp){
     if(d.modules)for(const m of d.modules){const{articles,id,...md}=m;await db.collection('modules').doc(id).set(md);if(articles)for(const a of articles){const{id:aid,...ad}=a;await db.collection('modules').doc(id).collection('articles').doc(aid).set(ad)}}
     if(d.members)for(const m of d.members){const{id,...md}=m;await db.collection('members').doc(id).set(md)}
     if(d.guests)for(const g of d.guests){const{id,...gd}=g;await db.collection('guests').doc(id).set(gd)}
-    if(d.gallery)for(const g of d.gallery){const{id,...gd}=g;await db.collection('gallery').doc(id).set(gd)}
     inp.value='';showToast('导入成功');setTimeout(()=>location.reload(),1000)
   }catch(e){showToast('失败: '+e.message)}
 }
 async function resetAllData(){
   if(!confirm('⚠️ 永久删除云端所有数据？')||!confirm('再次确认，不可撤销。'))return;
   showToast('重置中...');
-  try{for(const col of['modules','members','guests','gallery','meta']){const s=await db.collection(col).get();const b=db.batch();s.docs.forEach(d=>b.delete(d.ref));await b.commit();
+  try{for(const col of['modules','members','guests','guestbook','meta']){const s=await db.collection(col).get();const b=db.batch();s.docs.forEach(d=>b.delete(d.ref));await b.commit();
     if(col==='modules')for(const d of s.docs){const as=await db.collection('modules').doc(d.id).collection('articles').get();if(as.size){const ab=db.batch();as.docs.forEach(x=>ab.delete(x.ref));await ab.commit()}}}
     showToast('已重置');setTimeout(()=>location.reload(),1000)
   }catch(e){showToast('失败: '+e.message)}
@@ -633,7 +742,7 @@ function toggleMobileNav(){document.getElementById('navLinks').classList.toggle(
 function closeMobileNav(){document.getElementById('navLinks').classList.remove('open')}
 window.addEventListener('scroll',()=>document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>50));
 function observeFadeIn(){const o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');o.unobserve(e.target)}}),{threshold:0.15});document.querySelectorAll('.fade-in:not(.visible)').forEach(el=>o.observe(el))}
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLightbox();closeEditModal();closeGuestModal();closeEditGuestModal();closeLoginModal();closeAddModuleModal();if(currentModuleId)closeModuleDetail()}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLightbox();closeEditModal();closeGuestModal();closeEditGuestModal();closeLoginModal();closeAddModuleModal();closeCsEditModal();if(document.getElementById('csOverlay').classList.contains('active'))closeCharSheet();else if(currentModuleId)closeModuleDetail()}});
 
 // ===== GUESTBOOK =====
 const DAILY_LIMIT = 10;
@@ -714,7 +823,7 @@ async function deleteGbMsg(id) {
 // ===== INIT =====
 (async function(){
   restoreSession();
-  try{await initData();await Promise.all([loadModules(),loadMembers(),loadGuests(),loadGallery(),loadGuestbook()]);renderAll();renderGuestbook();observeFadeIn();updateAuthUI()}
+  try{await initData();await Promise.all([loadModules(),loadMembers(),loadGuests(),loadGuestbook()]);renderAll();renderGuestbook();observeFadeIn();updateAuthUI()}
   catch(e){console.error('Init:',e);showToast('加载失败，请刷新')}
   setTimeout(()=>{document.getElementById('loadingScreen').classList.add('hidden');setTimeout(()=>document.getElementById('loadingScreen').remove(),600)},800)
 })();
