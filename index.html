@@ -45,11 +45,16 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 nav{position:fixed;top:0;width:100%;z-index:1000;padding:1rem 3rem;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(10,9,8,0.95),transparent);transition:background 0.4s}
 nav.scrolled{background:rgba(10,9,8,0.97);backdrop-filter:blur(10px);border-bottom:1px solid rgba(201,168,76,0.15)}
 .nav-brand{font-family:var(--font-cn);font-size:1.1rem;font-weight:700;color:var(--gold);letter-spacing:0.15em;text-decoration:none;cursor:pointer}
+.nav-left{display:flex;align-items:center;gap:2rem}
 .nav-links{display:flex;gap:2.5rem;list-style:none}
 .nav-links a{font-family:var(--font-ui);font-size:0.8rem;font-weight:300;color:var(--ivory-dim);text-decoration:none;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.3s;position:relative;cursor:pointer}
 .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gold);transition:width 0.3s}
 .nav-links a:hover{color:var(--gold)}
 .nav-links a:hover::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.nav-user{font-family:var(--font-ui);font-size:0.75rem;color:var(--gold-dim);letter-spacing:0.05em}
+.nav-auth-btn{font-family:var(--font-ui);font-size:0.7rem;color:var(--gold-dim);background:none;border:1px solid rgba(201,168,76,0.2);padding:0.35rem 1rem;cursor:pointer;transition:all 0.3s;letter-spacing:0.08em}
+.nav-auth-btn:hover{border-color:var(--gold);color:var(--gold)}
 
 /* Mobile menu */
 .nav-hamburger{display:none;background:none;border:none;color:var(--gold-dim);font-size:1.5rem;cursor:pointer}
@@ -83,6 +88,7 @@ section{padding:6rem 3rem;max-width:1200px;margin:0 auto}
 .section-label{font-family:var(--font-display);font-size:0.65rem;letter-spacing:0.5em;color:var(--gold-dim);text-transform:uppercase;margin-bottom:1rem}
 .section-title{font-family:var(--font-cn);font-size:2rem;font-weight:700;color:var(--gold);letter-spacing:0.1em}
 .section-line{width:40px;height:1px;background:var(--gold-dim);margin:1.5rem auto 0}
+.section-flavor{font-family:var(--font-body);font-style:italic;font-size:0.95rem;color:var(--ivory-dim);text-align:center;margin-top:1.5rem;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.8;opacity:0.7}
 
 /* ===== MODULES ===== */
 .modules-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
@@ -98,6 +104,11 @@ section{padding:6rem 3rem;max-width:1200px;margin:0 auto}
 .module-count{font-family:var(--font-ui);font-size:0.7rem;color:var(--ivory-dim)}
 .module-arrow{font-family:var(--font-display);font-size:0.75rem;color:var(--gold-dim);transition:color 0.3s,transform 0.3s}
 .module-card:hover .module-arrow{color:var(--gold);transform:translateX(4px)}
+/* Add module card */
+.module-card-add{background:transparent;border:1px dashed rgba(201,168,76,0.2);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:200px;transition:all 0.3s}
+.module-card-add:hover{border-color:var(--gold);background:rgba(201,168,76,0.02)}
+.module-card-add .add-icon{font-size:2rem;color:var(--gold-dim);margin-bottom:1rem}
+.module-card-add .add-text{font-family:var(--font-ui);font-size:0.8rem;color:var(--gold-dim)}
 
 /* ===== MODULE DETAIL ===== */
 .module-detail{display:none;position:fixed;inset:0;z-index:2000;background:var(--bg-deep);overflow-y:auto}
@@ -113,6 +124,8 @@ section{padding:6rem 3rem;max-width:1200px;margin:0 auto}
 /* Article Editor */
 .new-article-btn{display:block;width:100%;padding:1.2rem;background:transparent;border:1px dashed rgba(201,168,76,0.25);color:var(--gold-dim);font-family:var(--font-ui);font-size:0.85rem;cursor:pointer;transition:all 0.3s;margin-bottom:2rem;letter-spacing:0.05em}
 .new-article-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.03)}
+.new-article-btn:disabled{opacity:0.4;cursor:not-allowed}
+.new-article-btn:disabled:hover{border-color:rgba(201,168,76,0.25);color:var(--gold-dim);background:transparent}
 .article-editor{display:none;background:var(--bg-card);border:1px solid rgba(201,168,76,0.15);padding:2rem;margin-bottom:2rem;animation:fadeUp 0.4s ease}
 .article-editor.active{display:block}
 .editor-field{margin-bottom:1.5rem}
@@ -138,7 +151,9 @@ section{padding:6rem 3rem;max-width:1200px;margin:0 auto}
 .article-item{background:var(--bg-card);border:1px solid rgba(201,168,76,0.08);padding:2rem;transition:all 0.3s}
 .article-item:hover{border-color:rgba(201,168,76,0.2)}
 .article-item-image{width:100%;max-height:400px;object-fit:cover;margin-bottom:1.5rem;border:1px solid rgba(201,168,76,0.1);cursor:pointer}
-.article-item-date{font-family:var(--font-display);font-size:0.65rem;letter-spacing:0.3em;color:var(--gold-dim);margin-bottom:0.8rem}
+.article-item-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.8rem;flex-wrap:wrap;gap:0.5rem}
+.article-item-date{font-family:var(--font-display);font-size:0.65rem;letter-spacing:0.3em;color:var(--gold-dim)}
+.article-item-author{font-family:var(--font-ui);font-size:0.65rem;color:var(--ivory-dim);opacity:0.7}
 .article-item-title{font-family:var(--font-cn);font-size:1.3rem;font-weight:700;color:var(--ivory);margin-bottom:0.8rem}
 .article-item-body{font-family:var(--font-body);font-size:1rem;color:var(--ivory-dim);line-height:1.9;white-space:pre-wrap}
 .article-delete{margin-top:1rem;font-family:var(--font-ui);font-size:0.7rem;color:var(--red-blood);cursor:pointer;background:none;border:none;opacity:0.5;transition:opacity 0.3s}
@@ -158,21 +173,32 @@ section{padding:6rem 3rem;max-width:1200px;margin:0 auto}
 .edit-member-btn{position:absolute;top:0.8rem;right:0.8rem;background:none;border:none;color:var(--gold-dim);cursor:pointer;font-size:0.7rem;opacity:0;transition:opacity 0.3s;font-family:var(--font-ui)}
 .member-card:hover .edit-member-btn{opacity:1}
 
-/* Guests */
+/* Guests - card style */
 .guest-section{border-top:1px solid rgba(201,168,76,0.08);padding-top:3rem}
-.guest-label{font-family:var(--font-display);font-size:0.65rem;letter-spacing:0.4em;color:var(--gold-dim);text-transform:uppercase;text-align:center;margin-bottom:2rem}
-.guest-grid{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center}
-.guest-tag{background:var(--bg-card);border:1px solid rgba(201,168,76,0.08);padding:0.6rem 1.5rem;font-family:var(--font-ui);font-size:0.8rem;color:var(--ivory-dim);transition:all 0.3s;position:relative}
-.guest-tag:hover{border-color:rgba(201,168,76,0.2);color:var(--ivory)}
-.guest-remove{position:absolute;top:-6px;right:-6px;width:16px;height:16px;border-radius:50%;background:var(--red-blood);border:none;color:var(--ivory);font-size:0.6rem;cursor:pointer;display:none;align-items:center;justify-content:center;line-height:1}
-.guest-tag:hover .guest-remove{display:flex}
-.add-guest-btn{background:transparent;border:1px dashed rgba(201,168,76,0.2);padding:0.6rem 1.5rem;font-family:var(--font-ui);font-size:0.8rem;color:var(--gold-dim);cursor:pointer;transition:all 0.3s}
-.add-guest-btn:hover{border-color:var(--gold);color:var(--gold)}
+.guest-label{font-family:var(--font-display);font-size:0.65rem;letter-spacing:0.4em;color:var(--gold-dim);text-transform:uppercase;text-align:center;margin-bottom:0.8rem}
+.guest-flavor{font-family:var(--font-body);font-style:italic;font-size:0.85rem;color:var(--ivory-dim);text-align:center;margin-bottom:2rem;opacity:0.6;line-height:1.7}
+.guest-grid{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:center}
+.guest-card{background:var(--bg-card);border:1px solid rgba(201,168,76,0.08);padding:1.5rem 1.2rem;text-align:center;transition:all 0.3s;position:relative;width:120px}
+.guest-card:hover{border-color:rgba(201,168,76,0.2);transform:translateY(-2px)}
+.guest-avatar{width:56px;height:56px;border-radius:50%;border:1.5px solid rgba(201,168,76,0.15);margin:0 auto 0.8rem;overflow:hidden;background:var(--bg-deep);display:flex;align-items:center;justify-content:center}
+.guest-avatar img{width:100%;height:100%;object-fit:cover}
+.guest-avatar-placeholder{font-family:var(--font-display);font-size:1rem;color:var(--gold-dim);opacity:0.5}
+.guest-name{font-family:var(--font-cn);font-size:0.85rem;font-weight:600;color:var(--ivory-dim)}
+.guest-remove{position:absolute;top:4px;right:4px;width:18px;height:18px;border-radius:50%;background:var(--red-blood);border:none;color:var(--ivory);font-size:0.6rem;cursor:pointer;display:none;align-items:center;justify-content:center;line-height:1}
+.guest-card:hover .guest-remove{display:flex}
+.guest-edit-btn{position:absolute;top:4px;left:4px;background:none;border:none;color:var(--gold-dim);cursor:pointer;font-size:0.6rem;opacity:0;transition:opacity 0.3s;font-family:var(--font-ui)}
+.guest-card:hover .guest-edit-btn{opacity:0.8}
+.add-guest-card{background:transparent;border:1px dashed rgba(201,168,76,0.2);width:120px;min-height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all 0.3s}
+.add-guest-card:hover{border-color:var(--gold);background:rgba(201,168,76,0.02)}
+.add-guest-card .add-icon{font-size:1.2rem;color:var(--gold-dim);margin-bottom:0.5rem}
+.add-guest-card .add-text{font-family:var(--font-ui);font-size:0.7rem;color:var(--gold-dim)}
 
 /* ===== GALLERY ===== */
 .gallery-upload-area{border:1px dashed rgba(201,168,76,0.2);padding:3rem;text-align:center;margin-bottom:2rem;cursor:pointer;transition:all 0.3s}
 .gallery-upload-area:hover{border-color:var(--gold);background:rgba(201,168,76,0.02)}
 .gallery-upload-area.dragover{border-color:var(--gold-bright);background:rgba(201,168,76,0.05)}
+.gallery-upload-area.disabled{opacity:0.4;cursor:not-allowed}
+.gallery-upload-area.disabled:hover{border-color:rgba(201,168,76,0.2);background:transparent}
 .gallery-upload-icon{font-size:2rem;color:var(--gold-dim);margin-bottom:1rem}
 .gallery-upload-text{font-family:var(--font-ui);font-size:0.8rem;color:var(--ivory-dim)}
 .gallery-upload-hint{font-family:var(--font-ui);font-size:0.65rem;color:rgba(168,158,142,0.5);margin-top:0.5rem}
@@ -182,7 +208,9 @@ section{padding:6rem 3rem;max-width:1200px;margin:0 auto}
 .gallery-item:hover img{transform:scale(1.05)}
 .gallery-item-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,9,8,0.8),transparent 50%);opacity:0;transition:opacity 0.3s;display:flex;align-items:flex-end;padding:1rem}
 .gallery-item:hover .gallery-item-overlay{opacity:1}
-.gallery-item-caption{font-family:var(--font-ui);font-size:0.75rem;color:var(--ivory);flex:1}
+.gallery-item-info{flex:1}
+.gallery-item-caption{font-family:var(--font-ui);font-size:0.75rem;color:var(--ivory);display:block}
+.gallery-item-author{font-family:var(--font-ui);font-size:0.6rem;color:var(--ivory-dim);opacity:0.7;margin-top:0.2rem;display:block}
 .gallery-item-delete{background:none;border:none;color:var(--red-blood);font-size:0.7rem;cursor:pointer;font-family:var(--font-ui);padding:0.3rem 0.5rem;transition:color 0.3s}
 .gallery-item-delete:hover{color:var(--red-glow)}
 
@@ -192,6 +220,11 @@ section{padding:6rem 3rem;max-width:1200px;margin:0 auto}
 .data-btn:hover{border-color:var(--gold);color:var(--gold)}
 .data-btn.danger{border-color:rgba(107,26,26,0.3)}
 .data-btn.danger:hover{border-color:var(--red-glow);color:var(--red-glow)}
+
+/* ===== LOGIN MODAL ===== */
+.login-modal .modal-box{max-width:380px}
+.login-error{font-family:var(--font-ui);font-size:0.75rem;color:var(--red-glow);margin-top:0.5rem;display:none}
+.login-error.show{display:block}
 
 /* ===== FOOTER ===== */
 footer{border-top:1px solid rgba(201,168,76,0.08);padding:3rem;text-align:center}
@@ -234,6 +267,7 @@ footer{border-top:1px solid rgba(201,168,76,0.08);padding:3rem;text-align:center
   .team-grid{grid-template-columns:1fr}
   .detail-header{padding:1rem 1.5rem}
   .detail-content{padding:2rem 1rem}
+  .nav-user{display:none}
 }
 </style>
 </head>
@@ -247,13 +281,19 @@ footer{border-top:1px solid rgba(201,168,76,0.08);padding:3rem;text-align:center
 
 <!-- Navigation -->
 <nav id="mainNav">
-  <span class="nav-brand" onclick="goHome()">急切的食欲</span>
-  <button class="nav-hamburger" onclick="toggleMobileNav()">☰</button>
-  <ul class="nav-links" id="navLinks">
-    <li><a onclick="goHome();scrollTo('#modules');closeMobileNav()">模组档案</a></li>
-    <li><a onclick="goHome();scrollTo('#team');closeMobileNav()">团员</a></li>
-    <li><a onclick="goHome();scrollTo('#gallery');closeMobileNav()">图库</a></li>
-  </ul>
+  <div class="nav-left">
+    <span class="nav-brand" onclick="goHome()">急切的食欲</span>
+    <button class="nav-hamburger" onclick="toggleMobileNav()">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a onclick="goHome();scrollToEl('#modules');closeMobileNav()">模组档案</a></li>
+      <li><a onclick="goHome();scrollToEl('#team');closeMobileNav()">团员</a></li>
+      <li><a onclick="goHome();scrollToEl('#gallery');closeMobileNav()">图库</a></li>
+    </ul>
+  </div>
+  <div class="nav-right">
+    <span class="nav-user" id="navUser"></span>
+    <button class="nav-auth-btn" id="navAuthBtn" onclick="handleAuth()">登录</button>
+  </div>
 </nav>
 
 <!-- Hero -->
@@ -267,7 +307,7 @@ footer{border-top:1px solid rgba(201,168,76,0.08);padding:3rem;text-align:center
     <div class="hero-divider"></div>
     <p class="hero-tagline">"那些未能撕裂我们血肉的未知，正以急切的食欲，蚕食着我们的理智。"</p>
   </div>
-  <a class="hero-scroll" onclick="scrollTo('#modules')">向下探索 ↓</a>
+  <a class="hero-scroll" onclick="scrollToEl('#modules')">向下探索 ↓</a>
 </div>
 
 <!-- Modules -->
@@ -286,10 +326,12 @@ footer{border-top:1px solid rgba(201,168,76,0.08);padding:3rem;text-align:center
     <div class="section-label">Investigators</div>
     <h2 class="section-title">调查员档案</h2>
     <div class="section-line"></div>
+    <div class="section-flavor">当惊骇的旅人从漫宿的门前逃离，我们却选择留下，<br>在理智的废墟中静候诸司辰的下一次叩门。</div>
   </div>
   <div class="team-grid" id="teamGrid"></div>
   <div class="guest-section fade-in">
     <div class="guest-label">Guest Investigators</div>
+    <div class="guest-flavor">那些曾短暂驻足于此，窥见漫宿一角的旅人。</div>
     <div class="guest-grid" id="guestGrid"></div>
   </div>
 </section>
@@ -303,7 +345,7 @@ footer{border-top:1px solid rgba(201,168,76,0.08);padding:3rem;text-align:center
   </div>
   <div class="gallery-upload-area fade-in" id="galleryUpload">
     <div class="gallery-upload-icon">✦</div>
-    <div class="gallery-upload-text">点击或拖拽上传图片至图库</div>
+    <div class="gallery-upload-text" id="galleryUploadText">点击或拖拽上传图片至图库</div>
     <div class="gallery-upload-hint">图片将自动压缩至适合网页的尺寸</div>
     <input type="file" id="galleryFileInput" accept="image/*" style="display:none" multiple>
   </div>
@@ -335,6 +377,26 @@ footer{border-top:1px solid rgba(201,168,76,0.08);padding:3rem;text-align:center
     <div style="width:80px"></div>
   </div>
   <div class="detail-content" id="detailContent"></div>
+</div>
+
+<!-- Login Modal -->
+<div class="modal-overlay login-modal" id="loginModal" onclick="if(event.target===this)closeLoginModal()">
+  <div class="modal-box">
+    <div class="modal-title">调查员身份验证</div>
+    <div class="modal-field">
+      <label>名称</label>
+      <input type="text" id="loginName" placeholder="输入用户名..." autocomplete="username">
+    </div>
+    <div class="modal-field">
+      <label>密钥</label>
+      <input type="password" id="loginPass" placeholder="输入密码..." autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="login-error" id="loginError">身份验证失败，请重试。</div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeLoginModal()">取消</button>
+      <button class="btn-publish" onclick="doLogin()">验证</button>
+    </div>
+  </div>
 </div>
 
 <!-- Edit Member Modal -->
@@ -374,11 +436,65 @@ footer{border-top:1px solid rgba(201,168,76,0.08);padding:3rem;text-align:center
     <div class="modal-title">添加客座调查员</div>
     <div class="modal-field">
       <label>名称</label>
-      <input type="text" id="guestName" onkeydown="if(event.key==='Enter')saveGuest()">
+      <input type="text" id="guestNameInput" onkeydown="if(event.key==='Enter')saveGuest()">
+    </div>
+    <div class="modal-field">
+      <label>头像（可选）</label>
+      <div class="editor-image-upload">
+        <button class="upload-btn" onclick="document.getElementById('guestAvatarUpload').click()">选择图片</button>
+        <input type="file" id="guestAvatarUpload" accept="image/*" style="display:none">
+        <span id="guestAvatarFileName" class="upload-info"></span>
+      </div>
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeGuestModal()">取消</button>
       <button class="btn-publish" onclick="saveGuest()">添加</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Guest Modal -->
+<div class="modal-overlay" id="editGuestModal" onclick="if(event.target===this)closeEditGuestModal()">
+  <div class="modal-box">
+    <div class="modal-title">编辑客座调查员</div>
+    <div class="modal-field">
+      <label>名称</label>
+      <input type="text" id="editGuestName">
+    </div>
+    <div class="modal-field">
+      <label>头像</label>
+      <div class="editor-image-upload">
+        <button class="upload-btn" onclick="document.getElementById('editGuestAvatarUpload').click()">选择图片</button>
+        <input type="file" id="editGuestAvatarUpload" accept="image/*" style="display:none">
+        <span id="editGuestAvatarFileName" class="upload-info"></span>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeEditGuestModal()">取消</button>
+      <button class="btn-publish" onclick="saveEditGuest()">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Module Modal -->
+<div class="modal-overlay" id="addModuleModal" onclick="if(event.target===this)closeAddModuleModal()">
+  <div class="modal-box">
+    <div class="modal-title">添加新模组</div>
+    <div class="modal-field">
+      <label>模组名称</label>
+      <input type="text" id="newModuleName" placeholder="例：遥远的北方">
+    </div>
+    <div class="modal-field">
+      <label>英文名称</label>
+      <input type="text" id="newModuleNameEn" placeholder="例：The Far North">
+    </div>
+    <div class="modal-field">
+      <label>简介</label>
+      <textarea id="newModuleDesc" placeholder="模组描述..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeAddModuleModal()">取消</button>
+      <button class="btn-publish" onclick="saveNewModule()">创建</button>
     </div>
   </div>
 </div>
@@ -392,33 +508,138 @@ footer{border-top:1px solid rgba(201,168,76,0.08);padding:3rem;text-align:center
 <div class="toast" id="toast"></div>
 
 <script>
+// ===== AUTH SYSTEM =====
+// Simple hash for password verification (NOT cryptographically secure, but adequate for a team site)
+async function simpleHash(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+// Pre-computed SHA-256 hashes of passwords
+const USERS = {
+  '流奈': '5f2a498d8ed7073e7a8aefaa5d27a3e tried',
+  '灯花': '',
+  '冬日': '',
+  '凤凰': '',
+  '君商': ''
+};
+
+// We'll compute hashes at init instead of hardcoding
+const USER_PASSWORDS = {
+  '流奈': 'uoaLuna',
+  '灯花': 'uoaTooka',
+  '冬日': 'uoaLucas',
+  '凤凰': 'uoaPhoenix',
+  '君商': 'uoaAmber'
+};
+
+let currentUser = null; // null = not logged in, string = username
+
+function isLoggedIn() { return currentUser !== null; }
+function getCurrentUser() { return currentUser; }
+
+function restoreSession() {
+  try {
+    const saved = sessionStorage.getItem('ua-session');
+    if (saved && USER_PASSWORDS[saved]) {
+      currentUser = saved;
+    }
+  } catch {}
+  updateAuthUI();
+}
+
+function updateAuthUI() {
+  const userEl = document.getElementById('navUser');
+  const btnEl = document.getElementById('navAuthBtn');
+  if (isLoggedIn()) {
+    userEl.textContent = currentUser;
+    btnEl.textContent = '登出';
+  } else {
+    userEl.textContent = '';
+    btnEl.textContent = '登录';
+  }
+  // Update gallery upload area
+  const gUpload = document.getElementById('galleryUpload');
+  const gText = document.getElementById('galleryUploadText');
+  if (isLoggedIn()) {
+    gUpload.classList.remove('disabled');
+    gText.textContent = '点击或拖拽上传图片至图库';
+  } else {
+    gUpload.classList.add('disabled');
+    gText.textContent = '登录后可上传图片';
+  }
+}
+
+function handleAuth() {
+  if (isLoggedIn()) {
+    currentUser = null;
+    try { sessionStorage.removeItem('ua-session'); } catch {}
+    updateAuthUI();
+    showToast('已登出');
+    // Re-render to update edit buttons
+    renderModules();
+    renderTeam();
+    renderGuests();
+  } else {
+    openLoginModal();
+  }
+}
+
+function openLoginModal() {
+  document.getElementById('loginName').value = '';
+  document.getElementById('loginPass').value = '';
+  document.getElementById('loginError').classList.remove('show');
+  document.getElementById('loginModal').classList.add('active');
+  setTimeout(() => document.getElementById('loginName').focus(), 100);
+}
+function closeLoginModal() {
+  document.getElementById('loginModal').classList.remove('active');
+}
+
+async function doLogin() {
+  const name = document.getElementById('loginName').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  if (USER_PASSWORDS[name] && USER_PASSWORDS[name] === pass) {
+    currentUser = name;
+    try { sessionStorage.setItem('ua-session', name); } catch {}
+    closeLoginModal();
+    updateAuthUI();
+    renderModules();
+    renderTeam();
+    renderGuests();
+    showToast('欢迎回来，' + name);
+  } else {
+    document.getElementById('loginError').classList.add('show');
+  }
+}
+
+function requireLogin(action) {
+  if (!isLoggedIn()) {
+    showToast('请先登录');
+    openLoginModal();
+    return false;
+  }
+  return true;
+}
+
 // ===== IndexedDB Storage Engine =====
 const DB_NAME = 'UrgentAppetiteDB';
 const DB_VERSION = 1;
 const STORE_NAME = 'data';
 
 class Storage {
-  constructor() {
-    this.db = null;
-  }
-
+  constructor() { this.db = null; }
   async init() {
     return new Promise((resolve, reject) => {
       const req = indexedDB.open(DB_NAME, DB_VERSION);
       req.onupgradeneeded = (e) => {
         const db = e.target.result;
-        if (!db.objectStoreNames.contains(STORE_NAME)) {
-          db.createObjectStore(STORE_NAME);
-        }
+        if (!db.objectStoreNames.contains(STORE_NAME)) db.createObjectStore(STORE_NAME);
       };
-      req.onsuccess = (e) => {
-        this.db = e.target.result;
-        resolve();
-      };
+      req.onsuccess = (e) => { this.db = e.target.result; resolve(); };
       req.onerror = () => reject(req.error);
     });
   }
-
   async get(key) {
     return new Promise((resolve, reject) => {
       const tx = this.db.transaction(STORE_NAME, 'readonly');
@@ -427,7 +648,6 @@ class Storage {
       req.onerror = () => reject(req.error);
     });
   }
-
   async set(key, value) {
     return new Promise((resolve, reject) => {
       const tx = this.db.transaction(STORE_NAME, 'readwrite');
@@ -436,7 +656,6 @@ class Storage {
       req.onerror = () => reject(req.error);
     });
   }
-
   async delete(key) {
     return new Promise((resolve, reject) => {
       const tx = this.db.transaction(STORE_NAME, 'readwrite');
@@ -445,7 +664,6 @@ class Storage {
       req.onerror = () => reject(req.error);
     });
   }
-
   async getAll() {
     return new Promise((resolve, reject) => {
       const tx = this.db.transaction(STORE_NAME, 'readonly');
@@ -460,7 +678,6 @@ class Storage {
       tx.onerror = () => reject(tx.error);
     });
   }
-
   async clear() {
     return new Promise((resolve, reject) => {
       const tx = this.db.transaction(STORE_NAME, 'readwrite');
@@ -470,7 +687,6 @@ class Storage {
     });
   }
 }
-
 const storage = new Storage();
 
 // ===== Image Compression =====
@@ -483,10 +699,8 @@ function compressImage(file, maxWidth = 1200, quality = 0.75) {
         const canvas = document.createElement('canvas');
         let w = img.width, h = img.height;
         if (w > maxWidth) { h = h * maxWidth / w; w = maxWidth; }
-        canvas.width = w;
-        canvas.height = h;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, w, h);
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
         resolve(canvas.toDataURL('image/jpeg', quality));
       };
       img.src = e.target.result;
@@ -494,13 +708,14 @@ function compressImage(file, maxWidth = 1200, quality = 0.75) {
     reader.readAsDataURL(file);
   });
 }
+function compressAvatar(file) { return compressImage(file, 300, 0.8); }
 
-function compressAvatar(file) {
-  return compressImage(file, 300, 0.8);
-}
+// ===== Data Version & Defaults =====
+// Increment DATA_VERSION to force a refresh of default data
+const DATA_VERSION = 2;
 
-// ===== Default Data =====
 const DEFAULT_DATA = {
+  version: DATA_VERSION,
   modules: [
     { id: 'orient-express', name: '东方快车上的恐怖', nameEn: 'Horror on the Orient Express', desc: '横跨欧洲的列车之旅，古老的雕像碎片散落在沿途的每一座城市。旅途中潜伏的恐怖远比乘客们想象的更加深邃。' },
     { id: 'king-in-yellow', name: '褴褛之王', nameEn: 'The King in Yellow', desc: '黄色的面具之下隐藏着怎样的面容？在历史的夹缝与阴影中，与那位编织了无数悲剧的莎士比亚隔着时空静默对望。' },
@@ -513,47 +728,53 @@ const DEFAULT_DATA = {
     { id: 4, name: '君商', role: '杯', bio: '食、色、性，有溺而无还者也', initial: 'IV' },
     { id: 5, name: '凤凰', role: '心', bio: '为了保护我们所知世界的表皮，不息之心无尽地搏动着', initial: 'V' }
   ],
-  guests: ['小樱', '']
+  guests: [
+    { id: 'g1', name: '小樱' }
+  ]
 };
 
 // ===== App State =====
 let appData = { modules: [], members: [], guests: [] };
-let articlesByModule = {};  // moduleId -> articles array
-let avatarImages = {};      // memberId -> base64
-let galleryImages = [];     // [{id, src, caption}]
+let articlesByModule = {};
+let avatarImages = {};
+let guestAvatarImages = {};
+let galleryImages = [];
 let currentModuleId = null;
 let currentEditMemberId = null;
+let currentEditGuestId = null;
 
 // ===== Persistence =====
 async function loadAllData() {
   try {
     const meta = await storage.get('meta');
-    if (meta) {
+    // Check if data needs refresh (version mismatch or no data)
+    if (meta && meta.version === DATA_VERSION) {
       appData = meta;
     } else {
+      // Version mismatch or first load - use defaults but preserve user articles/images if they exist
       appData = JSON.parse(JSON.stringify(DEFAULT_DATA));
       await storage.set('meta', appData);
     }
 
-    // Load articles per module
     for (const mod of appData.modules) {
       const arts = await storage.get('articles:' + mod.id);
       articlesByModule[mod.id] = arts || [];
     }
-
-    // Load avatars
     for (const m of appData.members) {
       const av = await storage.get('avatar:' + m.id);
       if (av) avatarImages[m.id] = av;
     }
-
-    // Load gallery index
+    // Load guest avatars
+    for (const g of appData.guests) {
+      const av = await storage.get('guest-avatar:' + g.id);
+      if (av) guestAvatarImages[g.id] = av;
+    }
     const gIdx = await storage.get('gallery-index');
     if (gIdx) {
       galleryImages = [];
       for (const item of gIdx) {
         const src = await storage.get('gallery:' + item.id);
-        if (src) galleryImages.push({ id: item.id, src, caption: item.caption });
+        if (src) galleryImages.push({ id: item.id, src, caption: item.caption, author: item.author || '' });
       }
     }
   } catch (err) {
@@ -562,16 +783,10 @@ async function loadAllData() {
   }
 }
 
-async function saveMeta() {
-  await storage.set('meta', appData);
-}
-
-async function saveArticles(moduleId) {
-  await storage.set('articles:' + moduleId, articlesByModule[moduleId] || []);
-}
-
+async function saveMeta() { await storage.set('meta', appData); }
+async function saveArticles(moduleId) { await storage.set('articles:' + moduleId, articlesByModule[moduleId] || []); }
 async function saveGalleryIndex() {
-  const idx = galleryImages.map(g => ({ id: g.id, caption: g.caption }));
+  const idx = galleryImages.map(g => ({ id: g.id, caption: g.caption, author: g.author || '' }));
   await storage.set('gallery-index', idx);
 }
 
@@ -580,13 +795,13 @@ function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2000);
+  setTimeout(() => t.classList.remove('show'), 2500);
 }
 
 // ===== Render =====
 function renderModules() {
   const grid = document.getElementById('modulesGrid');
-  grid.innerHTML = appData.modules.map((m, i) => {
+  const cards = appData.modules.map((m, i) => {
     const count = (articlesByModule[m.id] || []).length;
     return `
     <div class="module-card fade-in" onclick="openModule('${m.id}')">
@@ -600,6 +815,15 @@ function renderModules() {
       </div>
     </div>`;
   }).join('');
+
+  // Add module button (only visible when logged in)
+  const addCard = isLoggedIn() ? `
+    <div class="module-card module-card-add fade-in" onclick="openAddModuleModal()">
+      <div class="add-icon">✦</div>
+      <div class="add-text">添加新模组</div>
+    </div>` : '';
+
+  grid.innerHTML = cards + addCard;
   observeFadeIn();
 }
 
@@ -607,9 +831,10 @@ function renderTeam() {
   const grid = document.getElementById('teamGrid');
   grid.innerHTML = appData.members.map(m => {
     const av = avatarImages[m.id];
+    const editBtn = isLoggedIn() ? `<button class="edit-member-btn" onclick="event.stopPropagation();openEditModal(${m.id})">编辑 ✎</button>` : '';
     return `
     <div class="member-card fade-in">
-      <button class="edit-member-btn" onclick="event.stopPropagation();openEditModal(${m.id})">编辑 ✎</button>
+      ${editBtn}
       <div class="member-avatar">
         ${av ? `<img src="${av}" alt="${esc(m.name)}">` : `<span class="avatar-placeholder">${esc(m.initial)}</span>`}
       </div>
@@ -623,25 +848,46 @@ function renderTeam() {
 
 function renderGuests() {
   const grid = document.getElementById('guestGrid');
-  grid.innerHTML = appData.guests.map((g, i) => `
-    <div class="guest-tag">
-      ${esc(g)}
-      <button class="guest-remove" onclick="removeGuest(${i})">×</button>
-    </div>
-  `).join('') + `<button class="add-guest-btn" onclick="openGuestModal()">+ 添加客座</button>`;
+  const cards = appData.guests.map((g) => {
+    const av = guestAvatarImages[g.id];
+    const removeBtn = isLoggedIn() ? `<button class="guest-remove" onclick="event.stopPropagation();removeGuest('${g.id}')">×</button>` : '';
+    const editBtn = isLoggedIn() ? `<button class="guest-edit-btn" onclick="event.stopPropagation();openEditGuestModal('${g.id}')">✎</button>` : '';
+    return `
+    <div class="guest-card">
+      ${removeBtn}
+      ${editBtn}
+      <div class="guest-avatar">
+        ${av ? `<img src="${av}" alt="${esc(g.name)}">` : `<span class="guest-avatar-placeholder">✦</span>`}
+      </div>
+      <div class="guest-name">${esc(g.name)}</div>
+    </div>`;
+  }).join('');
+
+  const addBtn = isLoggedIn() ? `
+    <div class="add-guest-card" onclick="openGuestModal()">
+      <div class="add-icon">+</div>
+      <div class="add-text">添加客座</div>
+    </div>` : '';
+
+  grid.innerHTML = cards + addBtn;
 }
 
 function renderGallery() {
   const grid = document.getElementById('galleryGrid');
-  grid.innerHTML = galleryImages.map((img, i) => `
+  grid.innerHTML = galleryImages.map((img, i) => {
+    const deleteBtn = isLoggedIn() ? `<button class="gallery-item-delete" onclick="event.stopPropagation();deleteGalleryImage(${i})">删除</button>` : '';
+    return `
     <div class="gallery-item">
       <img src="${img.src}" alt="${esc(img.caption || '')}" onclick="openLightbox('${i}')">
       <div class="gallery-item-overlay">
-        <span class="gallery-item-caption">${esc(img.caption || '')}</span>
-        <button class="gallery-item-delete" onclick="event.stopPropagation();deleteGalleryImage(${i})">删除</button>
+        <div class="gallery-item-info">
+          <span class="gallery-item-caption">${esc(img.caption || '')}</span>
+          ${img.author ? `<span class="gallery-item-author">by ${esc(img.author)}</span>` : ''}
+        </div>
+        ${deleteBtn}
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 }
 
 function esc(str) {
@@ -660,10 +906,14 @@ function openModule(moduleId) {
   const articles = articlesByModule[moduleId] || [];
   const content = document.getElementById('detailContent');
 
+  const canPost = isLoggedIn();
+
   content.innerHTML = `
     <div class="detail-hero-title">${esc(mod.name)}</div>
     <div class="detail-hero-en">${esc(mod.nameEn)}</div>
-    <button class="new-article-btn" onclick="toggleEditor()">✦ 创建新条目</button>
+    <button class="new-article-btn" ${canPost ? 'onclick="toggleEditor()"' : 'disabled'}>
+      ${canPost ? '✦ 创建新条目' : '✦ 登录后可创建条目'}
+    </button>
     <div class="article-editor" id="articleEditor">
       <div class="editor-field">
         <label class="editor-label">标题</label>
@@ -689,17 +939,22 @@ function openModule(moduleId) {
     </div>
     <div class="articles-list" id="articlesList">
       ${articles.length === 0 ? '<div class="empty-state">尚无记录，点击上方按钮创建第一篇条目</div>' :
-        articles.map((a, i) => `
-        <div class="article-item">
-          ${a.imageKey ? `<img class="article-item-image" src="" data-key="${a.imageKey}" onclick="openLightboxByKey('${a.imageKey}')">` : ''}
-          <div class="article-item-date">${esc(a.date)}</div>
-          <div class="article-item-title">${esc(a.title)}</div>
-          <div class="article-item-body">${esc(a.body)}</div>
-          <button class="article-delete" onclick="deleteArticle(${i})">删除此条目</button>
-        </div>`).join('')}
+        articles.map((a, i) => {
+          const canDelete = isLoggedIn();
+          return `
+          <div class="article-item">
+            ${a.imageKey ? `<img class="article-item-image" src="" data-key="${a.imageKey}" onclick="openLightboxByKey('${a.imageKey}')">` : ''}
+            <div class="article-item-header">
+              <span class="article-item-date">${esc(a.date)}</span>
+              ${a.author ? `<span class="article-item-author">by ${esc(a.author)}</span>` : ''}
+            </div>
+            <div class="article-item-title">${esc(a.title)}</div>
+            <div class="article-item-body">${esc(a.body)}</div>
+            ${canDelete ? `<button class="article-delete" onclick="deleteArticle(${i})">删除此条目</button>` : ''}
+          </div>`;
+        }).join('')}
     </div>`;
 
-  // Load article images
   document.querySelectorAll('[data-key]').forEach(async (img) => {
     try {
       const src = await storage.get(img.dataset.key);
@@ -720,6 +975,7 @@ function closeModuleDetail() {
 }
 
 function toggleEditor() {
+  if (!requireLogin()) return;
   document.getElementById('articleEditor').classList.toggle('active');
 }
 
@@ -741,6 +997,7 @@ async function previewArticleImage(input) {
 }
 
 async function publishArticle() {
+  if (!requireLogin()) return;
   const title = document.getElementById('articleTitle').value.trim();
   const body = document.getElementById('articleBody').value.trim();
   if (!title) { showToast('请输入标题'); return; }
@@ -760,7 +1017,10 @@ async function publishArticle() {
     }
 
     if (!articlesByModule[currentModuleId]) articlesByModule[currentModuleId] = [];
-    articlesByModule[currentModuleId].unshift({ title, body, date: dateStr, imageKey });
+    articlesByModule[currentModuleId].unshift({
+      title, body, date: dateStr, imageKey,
+      author: getCurrentUser()
+    });
     await saveArticles(currentModuleId);
 
     pendingArticleImage = null;
@@ -775,21 +1035,50 @@ async function publishArticle() {
 }
 
 async function deleteArticle(index) {
+  if (!requireLogin()) return;
   if (!confirm('确定要删除此条目吗？')) return;
   const articles = articlesByModule[currentModuleId];
   if (!articles) return;
   const article = articles[index];
-  if (article.imageKey) {
-    try { await storage.delete(article.imageKey); } catch {}
-  }
+  if (article.imageKey) { try { await storage.delete(article.imageKey); } catch {} }
   articles.splice(index, 1);
   await saveArticles(currentModuleId);
   showToast('已删除');
   openModule(currentModuleId);
 }
 
+// ===== Add Module =====
+function openAddModuleModal() {
+  if (!requireLogin()) return;
+  document.getElementById('newModuleName').value = '';
+  document.getElementById('newModuleNameEn').value = '';
+  document.getElementById('newModuleDesc').value = '';
+  document.getElementById('addModuleModal').classList.add('active');
+  setTimeout(() => document.getElementById('newModuleName').focus(), 100);
+}
+function closeAddModuleModal() {
+  document.getElementById('addModuleModal').classList.remove('active');
+}
+async function saveNewModule() {
+  if (!requireLogin()) return;
+  const name = document.getElementById('newModuleName').value.trim();
+  const nameEn = document.getElementById('newModuleNameEn').value.trim();
+  const desc = document.getElementById('newModuleDesc').value.trim();
+  if (!name) { showToast('请输入模组名称'); return; }
+
+  const id = 'mod-' + Date.now();
+  appData.modules.push({ id, name, nameEn: nameEn || '', desc: desc || '' });
+  articlesByModule[id] = [];
+  await saveMeta();
+  await saveArticles(id);
+  closeAddModuleModal();
+  renderModules();
+  showToast('模组已创建');
+}
+
 // ===== Member Edit =====
 function openEditModal(memberId) {
+  if (!requireLogin()) return;
   currentEditMemberId = memberId;
   const member = appData.members.find(m => m.id === memberId);
   document.getElementById('editName').value = member.name;
@@ -799,12 +1088,10 @@ function openEditModal(memberId) {
   document.getElementById('avatarUpload').value = '';
   document.getElementById('editMemberModal').classList.add('active');
 }
-
 function closeEditModal() {
   document.getElementById('editMemberModal').classList.remove('active');
   currentEditMemberId = null;
 }
-
 document.getElementById('avatarUpload').addEventListener('change', function() {
   if (this.files[0]) document.getElementById('avatarFileName').textContent = this.files[0].name;
 });
@@ -812,7 +1099,6 @@ document.getElementById('avatarUpload').addEventListener('change', function() {
 async function saveMember() {
   const member = appData.members.find(m => m.id === currentEditMemberId);
   if (!member) return;
-
   member.name = document.getElementById('editName').value.trim() || member.name;
   member.role = document.getElementById('editRole').value.trim() || member.role;
   member.bio = document.getElementById('editBio').value.trim() || member.bio;
@@ -825,7 +1111,6 @@ async function saveMember() {
       await storage.set('avatar:' + member.id, compressed);
     } catch {}
   }
-
   await saveMeta();
   renderTeam();
   closeEditModal();
@@ -834,43 +1119,115 @@ async function saveMember() {
 
 // ===== Guests =====
 function openGuestModal() {
-  document.getElementById('guestName').value = '';
+  if (!requireLogin()) return;
+  document.getElementById('guestNameInput').value = '';
+  document.getElementById('guestAvatarFileName').textContent = '';
+  document.getElementById('guestAvatarUpload').value = '';
   document.getElementById('addGuestModal').classList.add('active');
-  setTimeout(() => document.getElementById('guestName').focus(), 100);
+  setTimeout(() => document.getElementById('guestNameInput').focus(), 100);
 }
 function closeGuestModal() {
   document.getElementById('addGuestModal').classList.remove('active');
 }
+document.getElementById('guestAvatarUpload').addEventListener('change', function() {
+  if (this.files[0]) document.getElementById('guestAvatarFileName').textContent = this.files[0].name;
+});
+
 async function saveGuest() {
-  const name = document.getElementById('guestName').value.trim();
+  if (!requireLogin()) return;
+  const name = document.getElementById('guestNameInput').value.trim();
   if (!name) return;
-  appData.guests.push(name);
+
+  const id = 'g' + Date.now();
+  appData.guests.push({ id, name });
+
+  const fileInput = document.getElementById('guestAvatarUpload');
+  if (fileInput.files && fileInput.files[0]) {
+    try {
+      const compressed = await compressAvatar(fileInput.files[0]);
+      guestAvatarImages[id] = compressed;
+      await storage.set('guest-avatar:' + id, compressed);
+    } catch {}
+  }
+
   await saveMeta();
   renderGuests();
   closeGuestModal();
   showToast('已添加');
 }
-async function removeGuest(index) {
-  appData.guests.splice(index, 1);
+
+async function removeGuest(guestId) {
+  if (!requireLogin()) return;
+  if (!confirm('移除此客座调查员？')) return;
+  const idx = appData.guests.findIndex(g => g.id === guestId);
+  if (idx === -1) return;
+  appData.guests.splice(idx, 1);
+  try { await storage.delete('guest-avatar:' + guestId); } catch {}
+  delete guestAvatarImages[guestId];
   await saveMeta();
   renderGuests();
+}
+
+// Edit guest
+function openEditGuestModal(guestId) {
+  if (!requireLogin()) return;
+  currentEditGuestId = guestId;
+  const guest = appData.guests.find(g => g.id === guestId);
+  if (!guest) return;
+  document.getElementById('editGuestName').value = guest.name;
+  document.getElementById('editGuestAvatarFileName').textContent = '';
+  document.getElementById('editGuestAvatarUpload').value = '';
+  document.getElementById('editGuestModal').classList.add('active');
+}
+function closeEditGuestModal() {
+  document.getElementById('editGuestModal').classList.remove('active');
+  currentEditGuestId = null;
+}
+document.getElementById('editGuestAvatarUpload').addEventListener('change', function() {
+  if (this.files[0]) document.getElementById('editGuestAvatarFileName').textContent = this.files[0].name;
+});
+async function saveEditGuest() {
+  const guest = appData.guests.find(g => g.id === currentEditGuestId);
+  if (!guest) return;
+  guest.name = document.getElementById('editGuestName').value.trim() || guest.name;
+
+  const fileInput = document.getElementById('editGuestAvatarUpload');
+  if (fileInput.files && fileInput.files[0]) {
+    try {
+      const compressed = await compressAvatar(fileInput.files[0]);
+      guestAvatarImages[guest.id] = compressed;
+      await storage.set('guest-avatar:' + guest.id, compressed);
+    } catch {}
+  }
+  await saveMeta();
+  renderGuests();
+  closeEditGuestModal();
+  showToast('已保存');
 }
 
 // ===== Gallery =====
 const galleryUpload = document.getElementById('galleryUpload');
 const galleryFileInput = document.getElementById('galleryFileInput');
 
-galleryUpload.addEventListener('click', () => galleryFileInput.click());
-galleryUpload.addEventListener('dragover', (e) => { e.preventDefault(); galleryUpload.classList.add('dragover'); });
+galleryUpload.addEventListener('click', () => {
+  if (!isLoggedIn()) { showToast('请先登录'); openLoginModal(); return; }
+  galleryFileInput.click();
+});
+galleryUpload.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  if (isLoggedIn()) galleryUpload.classList.add('dragover');
+});
 galleryUpload.addEventListener('dragleave', () => galleryUpload.classList.remove('dragover'));
 galleryUpload.addEventListener('drop', (e) => {
   e.preventDefault();
   galleryUpload.classList.remove('dragover');
+  if (!isLoggedIn()) { showToast('请先登录'); return; }
   handleGalleryFiles(e.dataTransfer.files);
 });
 galleryFileInput.addEventListener('change', function() { handleGalleryFiles(this.files); });
 
 async function handleGalleryFiles(files) {
+  if (!requireLogin()) return;
   for (const file of files) {
     if (!file.type.startsWith('image/')) continue;
     try {
@@ -878,7 +1235,11 @@ async function handleGalleryFiles(files) {
       const compressed = await compressImage(file, 1400, 0.8);
       const id = 'g' + Date.now() + Math.random().toString(36).slice(2, 6);
       await storage.set('gallery:' + id, compressed);
-      galleryImages.unshift({ id, src: compressed, caption: file.name.replace(/\.[^.]+$/, '') });
+      galleryImages.unshift({
+        id, src: compressed,
+        caption: file.name.replace(/\.[^.]+$/, ''),
+        author: getCurrentUser()
+      });
       await saveGalleryIndex();
       renderGallery();
       showToast('上传成功');
@@ -889,6 +1250,7 @@ async function handleGalleryFiles(files) {
 }
 
 async function deleteGalleryImage(index) {
+  if (!requireLogin()) return;
   if (!confirm('删除此图片？')) return;
   const img = galleryImages[index];
   try { await storage.delete('gallery:' + img.id); } catch {}
@@ -914,9 +1276,7 @@ async function openLightboxByKey(key) {
     }
   } catch {}
 }
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('active');
-}
+function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); }
 
 // ===== Data Import/Export =====
 async function exportData() {
@@ -926,34 +1286,25 @@ async function exportData() {
     const blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url;
-    a.download = `急切的食欲_backup_${new Date().toISOString().slice(0,10)}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
+    a.href = url; a.download = `急切的食欲_backup_${new Date().toISOString().slice(0,10)}.json`;
+    a.click(); URL.revokeObjectURL(url);
     showToast('导出成功');
-  } catch (err) {
-    showToast('导出失败: ' + err.message);
-  }
+  } catch (err) { showToast('导出失败: ' + err.message); }
 }
 
 async function importData(input) {
   if (!input.files[0]) return;
   if (!confirm('导入将覆盖当前所有数据，确定继续？')) { input.value = ''; return; }
-
   showToast('正在导入...');
   try {
     const text = await input.files[0].text();
     const data = JSON.parse(text);
     await storage.clear();
-    for (const [key, value] of Object.entries(data)) {
-      await storage.set(key, value);
-    }
+    for (const [key, value] of Object.entries(data)) await storage.set(key, value);
     input.value = '';
     showToast('导入成功，正在刷新...');
     setTimeout(() => location.reload(), 1000);
-  } catch (err) {
-    showToast('导入失败: ' + err.message);
-  }
+  } catch (err) { showToast('导入失败: ' + err.message); }
 }
 
 async function resetData() {
@@ -969,21 +1320,14 @@ function goHome() {
   closeModuleDetail();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
-function scrollTo(selector) {
+function scrollToEl(selector) {
   setTimeout(() => {
     const el = document.querySelector(selector);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   }, 100);
 }
-
-function toggleMobileNav() {
-  document.getElementById('navLinks').classList.toggle('open');
-}
-function closeMobileNav() {
-  document.getElementById('navLinks').classList.remove('open');
-}
-
+function toggleMobileNav() { document.getElementById('navLinks').classList.toggle('open'); }
+function closeMobileNav() { document.getElementById('navLinks').classList.remove('open'); }
 window.addEventListener('scroll', () => {
   document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 50);
 });
@@ -991,9 +1335,7 @@ window.addEventListener('scroll', () => {
 // ===== Fade In Observer =====
 function observeFadeIn() {
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
-    });
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
   }, { threshold: 0.15 });
   document.querySelectorAll('.fade-in:not(.visible)').forEach(el => observer.observe(el));
 }
@@ -1004,12 +1346,16 @@ document.addEventListener('keydown', (e) => {
     closeLightbox();
     closeEditModal();
     closeGuestModal();
+    closeEditGuestModal();
+    closeLoginModal();
+    closeAddModuleModal();
     if (currentModuleId) closeModuleDetail();
   }
 });
 
 // ===== INIT =====
 (async function init() {
+  restoreSession();
   try {
     await storage.init();
     await loadAllData();
@@ -1018,15 +1364,12 @@ document.addEventListener('keydown', (e) => {
     renderGuests();
     renderGallery();
     observeFadeIn();
+    updateAuthUI();
   } catch (err) {
     console.error('Init error:', err);
-    // Fallback: render with defaults
     appData = JSON.parse(JSON.stringify(DEFAULT_DATA));
-    renderModules();
-    renderTeam();
-    renderGuests();
+    renderModules(); renderTeam(); renderGuests();
   }
-  // Hide loading screen
   setTimeout(() => {
     document.getElementById('loadingScreen').classList.add('hidden');
     setTimeout(() => document.getElementById('loadingScreen').remove(), 600);
