@@ -531,6 +531,12 @@ async function initData(){
     DEF_GUESTS.forEach(x=>b.set(db.collection('guests').doc(x.id),x));
     b.set(db.collection('meta').doc('init'),{seeded:true});
     await b.commit();
+  } else {
+    const kpMap={'orient-express':'灯花','king-in-yellow':'灯花','stubborn':'流奈'};
+    const snap=await db.collection('modules').get();
+    const mb=db.batch();let need=false;
+    snap.docs.forEach(d=>{if(!d.data().kp&&kpMap[d.id]){mb.update(d.ref,{kp:kpMap[d.id]});need=true}});
+    if(need)await mb.commit();
   }
 }
 async function loadModules(){const s=await db.collection('modules').orderBy('order').get();modules=s.docs.map(d=>({id:d.id,...d.data()}))}
