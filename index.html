@@ -100,18 +100,57 @@ section{padding:6rem 3rem;max-width:1200px;margin:0 auto}
 .btn-publish:hover{background:var(--gold)}.btn-publish:disabled{opacity:0.5;cursor:not-allowed}
 .btn-cancel{padding:0.6rem 1.5rem;background:transparent;border:1px solid rgba(201,168,76,0.2);color:var(--ivory-dim);font-family:var(--font-ui);font-size:0.8rem;cursor:pointer;transition:all 0.3s}
 .btn-cancel:hover{border-color:var(--ivory-dim);color:var(--ivory)}
-.articles-list{display:flex;flex-direction:column;gap:1.5rem}
-.article-item{background:var(--bg-card);border:1px solid rgba(201,168,76,0.08);padding:2rem;transition:all 0.3s}
-.article-item:hover{border-color:rgba(201,168,76,0.2)}
-.article-item-image{width:100%;max-height:400px;object-fit:cover;margin-bottom:1.5rem;border:1px solid rgba(201,168,76,0.1);cursor:pointer}
-.article-item-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.8rem;flex-wrap:wrap;gap:0.5rem}
-.article-item-date{font-family:var(--font-display);font-size:0.65rem;letter-spacing:0.3em;color:var(--gold-dim)}
-.article-item-author{font-family:var(--font-ui);font-size:0.65rem;color:var(--ivory-dim);opacity:0.7}
-.article-item-title{font-family:var(--font-cn);font-size:1.3rem;font-weight:700;color:var(--ivory);margin-bottom:0.8rem}
-.article-item-body{font-family:var(--font-body);font-size:1rem;color:var(--ivory-dim);line-height:2;white-space:pre-wrap}
-.article-delete{margin-top:1rem;font-family:var(--font-ui);font-size:0.7rem;color:var(--red-blood);cursor:pointer;background:none;border:none;opacity:0.5;transition:opacity 0.3s}
-.article-delete:hover{opacity:1;color:var(--red-glow)}
+.articles-list{display:flex;flex-direction:column;gap:1rem}
+.article-item{background:var(--bg-card);border:1px solid rgba(201,168,76,0.08);padding:1.5rem;transition:all 0.3s;cursor:pointer;display:flex;gap:1.2rem;align-items:flex-start}
+.article-item:hover{border-color:rgba(201,168,76,0.2);background:var(--bg-card-hover)}
+.article-thumb{width:100px;height:75px;flex-shrink:0;border:1px solid rgba(201,168,76,0.1);overflow:hidden;background:var(--bg-deep);display:flex;align-items:center;justify-content:center}
+.article-thumb img{width:100%;height:100%;object-fit:cover}
+.article-thumb-ph{font-family:var(--font-display);font-size:0.8rem;color:var(--gold-dim);opacity:0.2}
+.article-item-content{flex:1;min-width:0}
+.article-item-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.4rem;flex-wrap:wrap;gap:0.3rem}
+.article-item-date{font-family:var(--font-display);font-size:0.6rem;letter-spacing:0.25em;color:var(--gold-dim)}
+.article-item-author{font-family:var(--font-ui);font-size:0.6rem;color:var(--ivory-dim);opacity:0.6}
+.article-item-title{font-family:var(--font-cn);font-size:1.05rem;font-weight:700;color:var(--ivory);margin-bottom:0.3rem;line-height:1.4}
+.article-item-excerpt{font-family:var(--font-body);font-size:0.85rem;color:var(--ivory-dim);line-height:1.7;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.article-item-meta{display:flex;align-items:center;gap:1rem;margin-top:0.4rem}
+.article-comment-count{font-family:var(--font-ui);font-size:0.6rem;color:var(--gold-dim);opacity:0.6}
+.article-delete{font-family:var(--font-ui);font-size:0.65rem;color:var(--red-blood);cursor:pointer;background:none;border:none;opacity:0;transition:opacity 0.3s}
+.article-item:hover .article-delete{opacity:0.6}
+.article-delete:hover{opacity:1!important;color:var(--red-glow)}
 .empty-state{text-align:center;color:var(--ivory-dim);font-family:var(--font-ui);font-size:0.85rem;padding:3rem 0;opacity:0.5}
+/* Article Full View */
+.article-full-overlay{display:none;position:fixed;inset:0;z-index:2500;background:var(--bg-deep);overflow-y:auto}
+.article-full-overlay.active{display:block}
+.af-header{padding:1.2rem 3rem;border-bottom:1px solid rgba(201,168,76,0.1);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:rgba(10,9,8,0.97);backdrop-filter:blur(10px);z-index:10}
+.af-back{font-family:var(--font-ui);font-size:0.8rem;color:var(--gold-dim);cursor:pointer;background:none;border:1px solid rgba(201,168,76,0.2);padding:0.4rem 1rem;transition:all 0.3s}
+.af-back:hover{border-color:var(--gold);color:var(--gold)}
+.af-body{max-width:720px;margin:0 auto;padding:2.5rem 1.5rem}
+.af-image{width:100%;max-height:450px;object-fit:cover;border:1px solid rgba(201,168,76,0.1);margin-bottom:2rem;cursor:pointer}
+.af-meta{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem}
+.af-date{font-family:var(--font-display);font-size:0.6rem;letter-spacing:0.3em;color:var(--gold-dim)}
+.af-author{font-family:var(--font-ui);font-size:0.6rem;color:var(--ivory-dim);opacity:0.6}
+.af-title{font-family:var(--font-cn);font-size:1.8rem;font-weight:900;color:var(--gold);margin-bottom:1.5rem;line-height:1.4}
+.af-text{font-family:var(--font-body);font-size:1.02rem;color:var(--ivory-dim);line-height:2;white-space:pre-wrap}
+/* Article Comments */
+.af-comments{margin-top:2.5rem;border-top:1px solid rgba(201,168,76,0.1);padding-top:1.5rem}
+.af-comments-title{font-family:var(--font-display);font-size:0.6rem;letter-spacing:0.35em;color:var(--gold-dim);text-transform:uppercase;margin-bottom:1.2rem}
+.af-comment-form{display:flex;gap:0.8rem;margin-bottom:1.5rem;align-items:flex-start}
+.af-comment-input{flex:1;background:var(--bg-deep);border:1px solid rgba(201,168,76,0.15);color:var(--ivory);font-family:var(--font-body);font-size:0.85rem;padding:0.6rem 0.8rem;outline:none;resize:none;min-height:60px;line-height:1.7}
+.af-comment-input:focus{border-color:var(--gold-dim)}
+.af-comment-send{padding:0.6rem 1.2rem;background:var(--gold-dim);border:none;color:var(--bg-deep);font-family:var(--font-ui);font-size:0.75rem;cursor:pointer;transition:background 0.3s;align-self:flex-end}
+.af-comment-send:hover{background:var(--gold)}
+.af-comment-send:disabled{opacity:0.4;cursor:not-allowed}
+.af-comment-login{font-family:var(--font-ui);font-size:0.75rem;color:var(--ivory-dim);opacity:0.5;margin-bottom:1.5rem}
+.af-comment-list{display:flex;flex-direction:column;gap:0.8rem}
+.af-comment{background:var(--bg-card);border:1px solid rgba(201,168,76,0.05);padding:1rem 1.2rem;position:relative}
+.af-comment-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.3rem}
+.af-comment-nick{font-family:var(--font-cn);font-size:0.8rem;font-weight:600;color:var(--gold)}
+.af-comment-time{font-family:var(--font-display);font-size:0.55rem;letter-spacing:0.15em;color:var(--gold-dim)}
+.af-comment-text{font-family:var(--font-body);font-size:0.85rem;color:var(--ivory-dim);line-height:1.7;white-space:pre-wrap}
+.af-comment-del{position:absolute;top:0.5rem;right:0.6rem;background:none;border:none;font-family:var(--font-ui);font-size:0.55rem;color:var(--red-blood);cursor:pointer;opacity:0;transition:opacity 0.3s}
+.af-comment:hover .af-comment-del{opacity:0.6}
+.af-comment-del:hover{opacity:1!important;color:var(--red-glow)}
+.af-comment-empty{font-family:var(--font-ui);font-size:0.75rem;color:var(--ivory-dim);opacity:0.4;padding:1rem 0}
 .team-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1.5rem;margin-bottom:3rem}
 .member-card{background:var(--bg-card);border:1px solid rgba(201,168,76,0.08);padding:2rem 1.5rem;text-align:center;transition:all 0.4s;position:relative}
 .member-card:hover{border-color:rgba(201,168,76,0.25);transform:translateY(-3px);box-shadow:0 15px 40px rgba(0,0,0,0.3)}
@@ -357,6 +396,11 @@ footer{border-top:1px solid rgba(201,168,76,0.08);padding:3rem;text-align:center
     <div class="modal-field"><label>简介</label><textarea id="newModuleDesc" placeholder="模组描述..."></textarea></div>
     <div class="modal-actions"><button class="btn-cancel" onclick="closeAddModuleModal()">取消</button><button class="btn-publish" onclick="saveNewModule()">创建</button></div>
   </div>
+</div>
+
+<div class="article-full-overlay" id="articleFullOverlay">
+  <div class="af-header"><button class="af-back" onclick="closeArticleFull()">← 返回</button><div class="detail-title-text" id="afHeaderTitle"></div><div style="width:80px"></div></div>
+  <div class="af-body" id="afBody"></div>
 </div>
 
 <div class="cs-overlay" id="csOverlay">
@@ -615,6 +659,9 @@ async function openModule(mid){
   currentModuleId=mid;const mod=modules.find(m=>m.id===mid);if(!mod)return;
   document.getElementById('detailTitle').textContent=mod.name;
   showToast('加载中...');currentArticles=await loadArticles(mid);
+  // Pre-fetch comment counts
+  const commentCounts={};
+  for(const a of currentArticles){try{const s=await db.collection('modules').doc(mid).collection('articles').doc(a.id).collection('comments').get();commentCounts[a.id]=s.size}catch{commentCounts[a.id]=0}}
   const cp=isLoggedIn();
   document.getElementById('detailContent').innerHTML=`
     <div class="detail-hero-title">${esc(mod.name)}</div><div class="detail-hero-en">${esc(mod.nameEn)}</div>
@@ -622,12 +669,21 @@ async function openModule(mid){
     <div class="article-editor" id="articleEditor">
       <div class="editor-field"><label class="editor-label">标题</label><input type="text" class="editor-input" id="articleTitle" placeholder="输入文章标题..."></div>
       <div class="editor-field"><label class="editor-label">封面图片（自动压缩）</label><div class="editor-image-upload"><button class="upload-btn" onclick="document.getElementById('articleImageInput').click()">选择图片</button><input type="file" id="articleImageInput" accept="image/*" style="display:none" onchange="previewArticleImage(this)"><img class="upload-preview" id="articleImagePreview"><span class="upload-info" id="articleImageInfo"></span></div></div>
-      <div class="editor-field"><label class="editor-label">正文</label><textarea class="editor-textarea" id="articleBody" placeholder="在此撰写博客内容..."></textarea></div>
+      <div class="editor-field"><label class="editor-label">正文</label><textarea class="editor-textarea" id="articleBody" placeholder="在此撰写内容..."></textarea></div>
       <div class="editor-actions"><button class="btn-cancel" onclick="toggleEditor()">取消</button><button class="btn-publish" id="publishBtn" onclick="publishArticle()">发布</button></div>
     </div>
     <div class="articles-list">${currentArticles.length===0?'<div class="empty-state">尚无记录，点击上方按钮创建第一篇条目</div>':currentArticles.map(a=>{
-      const del=isLoggedIn()?`<button class="article-delete" onclick="deleteArticle('${a.id}','${a.imagePath||''}')">删除此条目</button>`:'';
-      return `<div class="article-item">${a.imageUrl?`<img class="article-item-image" src="${a.imageUrl}" onclick="openLightboxUrl('${a.imageUrl}')">`:''}<div class="article-item-header"><span class="article-item-date">${esc(a.date)}</span>${a.author?`<span class="article-item-author">by ${esc(a.author)}</span>`:''}</div><div class="article-item-title">${esc(a.title)}</div><div class="article-item-body">${esc(a.body)}</div>${del}</div>`
+      const del=isLoggedIn()?`<button class="article-delete" onclick="event.stopPropagation();deleteArticle('${a.id}','${a.imagePath||''}')">删除</button>`:'';
+      const cc=commentCounts[a.id]||0;
+      const ccHtml=cc>0?`<span class="article-comment-count">💬 ${cc}</span>`:'';
+      return `<div class="article-item" onclick="openArticleFull('${a.id}')">
+        <div class="article-thumb">${a.imageUrl?`<img src="${a.imageUrl}">`:'<span class="article-thumb-ph">✦</span>'}</div>
+        <div class="article-item-content">
+          <div class="article-item-header"><span class="article-item-date">${esc(a.date)}</span>${a.author?`<span class="article-item-author">by ${esc(a.author)}</span>`:''}</div>
+          <div class="article-item-title">${esc(a.title)}</div>
+          <div class="article-item-excerpt">${esc(a.body)}</div>
+          <div class="article-item-meta">${ccHtml}${del}</div>
+        </div></div>`
     }).join('')}</div>`;
   document.getElementById('moduleDetail').classList.add('active');
   document.getElementById('moduleDetail').scrollTop=0;
@@ -635,6 +691,56 @@ async function openModule(mid){
 }
 function closeModuleDetail(){document.getElementById('moduleDetail').classList.remove('active');document.body.style.overflow='';currentModuleId=null;renderModules()}
 function toggleEditor(){if(!requireLogin())return;document.getElementById('articleEditor').classList.toggle('active')}
+
+// ===== ARTICLE FULL VIEW =====
+let currentArticleId=null;
+async function openArticleFull(aid){
+  currentArticleId=aid;
+  const a=currentArticles.find(x=>x.id===aid);if(!a)return;
+  document.getElementById('afHeaderTitle').textContent=a.title;
+  // Load comments
+  let comments=[];
+  try{const s=await db.collection('modules').doc(currentModuleId).collection('articles').doc(aid).collection('comments').orderBy('timestamp','asc').get();comments=s.docs.map(d=>({id:d.id,...d.data()}))}catch{}
+  const cp=isLoggedIn();
+  document.getElementById('afBody').innerHTML=`
+    ${a.imageUrl?`<img class="af-image" src="${a.imageUrl}" onclick="openLightboxUrl('${a.imageUrl}')">`:''}
+    <div class="af-meta"><span class="af-date">${esc(a.date)}</span>${a.author?`<span class="af-author">by ${esc(a.author)}</span>`:''}</div>
+    <div class="af-title">${esc(a.title)}</div>
+    <div class="af-text">${esc(a.body)}</div>
+    <div class="af-comments">
+      <div class="af-comments-title">COMMENTS · ${comments.length}</div>
+      ${cp?`<div class="af-comment-form"><textarea class="af-comment-input" id="afCommentInput" placeholder="写下你的评论..."></textarea><button class="af-comment-send" onclick="postArticleComment()">发送</button></div>`
+        :`<div class="af-comment-login">登录后可发表评论</div>`}
+      <div class="af-comment-list">${comments.length===0?'<div class="af-comment-empty">暂无评论</div>':comments.map(c=>{
+        const del=isLoggedIn()?`<button class="af-comment-del" onclick="deleteArticleComment('${c.id}')">删除</button>`:'';
+        return `<div class="af-comment">${del}<div class="af-comment-head"><span class="af-comment-nick">${esc(c.author)}</span><span class="af-comment-time">${esc(c.date||'')} ${esc(c.time||'')}</span></div><div class="af-comment-text">${esc(c.text)}</div></div>`
+      }).join('')}</div>
+    </div>`;
+  document.getElementById('articleFullOverlay').classList.add('active');
+  document.getElementById('articleFullOverlay').scrollTop=0;
+}
+function closeArticleFull(){document.getElementById('articleFullOverlay').classList.remove('active');currentArticleId=null}
+
+async function postArticleComment(){
+  if(!requireLogin())return;
+  const inp=document.getElementById('afCommentInput');
+  const text=inp.value.trim();if(!text){showToast('请输入评论');return}
+  try{
+    const now=new Date;
+    await db.collection('modules').doc(currentModuleId).collection('articles').doc(currentArticleId).collection('comments').add({
+      text,author:getCurrentUser(),
+      date:`${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`,
+      time:`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`,
+      timestamp:firebase.firestore.FieldValue.serverTimestamp()
+    });
+    showToast('评论成功');openArticleFull(currentArticleId);
+  }catch(e){showToast('失败: '+e.message)}
+}
+
+async function deleteArticleComment(cid){
+  if(!requireLogin()||!confirm('删除此评论？'))return;
+  try{await db.collection('modules').doc(currentModuleId).collection('articles').doc(currentArticleId).collection('comments').doc(cid).delete();showToast('已删除');openArticleFull(currentArticleId)}catch(e){showToast('失败: '+e.message)}
+}
 
 let pendingImg=null;
 async function previewArticleImage(inp){
@@ -745,7 +851,7 @@ function toggleMobileNav(){document.getElementById('navLinks').classList.toggle(
 function closeMobileNav(){document.getElementById('navLinks').classList.remove('open')}
 window.addEventListener('scroll',()=>document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>50));
 function observeFadeIn(){const o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');o.unobserve(e.target)}}),{threshold:0.15});document.querySelectorAll('.fade-in:not(.visible)').forEach(el=>o.observe(el))}
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLightbox();closeEditModal();closeGuestModal();closeEditGuestModal();closeLoginModal();closeAddModuleModal();closeCsEditModal();if(document.getElementById('csOverlay').classList.contains('active'))closeCharSheet();else if(currentModuleId)closeModuleDetail()}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLightbox();closeEditModal();closeGuestModal();closeEditGuestModal();closeLoginModal();closeAddModuleModal();closeCsEditModal();if(document.getElementById('articleFullOverlay').classList.contains('active'))closeArticleFull();else if(document.getElementById('csOverlay').classList.contains('active'))closeCharSheet();else if(currentModuleId)closeModuleDetail()}});
 
 // ===== GUESTBOOK =====
 const DAILY_LIMIT = 10;
