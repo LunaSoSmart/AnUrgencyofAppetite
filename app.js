@@ -124,7 +124,7 @@ async function renderGuests(){
 }
 
 // ===== CHARACTER SHEET =====
-let csCollection=null,csOwnerId=null;
+let csCollection=null,csOwnerId=null,csChars=[];
 
 async function openCharSheet(col,ownerId){
   csCollection=col;csOwnerId=ownerId;
@@ -132,15 +132,79 @@ async function openCharSheet(col,ownerId){
   if(!owner)return;
   document.getElementById('csTitle').textContent=owner.name+' — 角色卡';
   showToast('加载中...');
-  const snap=await db.collection(col).doc(ownerId).collection('characters').orderBy('timestamp','desc').get();
-  const chars=snap.docs.map(d=>({id:d.id,...d.data()}));
+  const snap=await db.collection(col).doc(ownerId).collection('characters').orderBy('order').get();
+  csChars=snap.docs.map(d=>({id:d.id,...d.data()}));
+  renderCsList();
+  document.getElementById('csOverlay').classList.add('active');document.body.style.overflow='hidden';
+}
+
+function renderCsList(){
   const body=document.getElementById('csBody');
   const canEdit=isLoggedIn();
-  let h=canEdit?`<button class="cs-add-btn" onclick="openCsEditModal()">✦ 添加角色卡</button>`:`<button class="cs-add-btn" disabled>✦ 登录后可添加角色卡</button>`;
-  if(chars.length===0)h+=`<div class="cs-empty">尚未创建角色卡，点击上方按钮创建。</div>`;
-  else h+=chars.map(c=>renderOneCard(c,canEdit)).join('');
+  let h=canEdit?'<button class="cs-add-btn" onclick="openCsEditModal()">✦ 添加角色卡</button>':'<button class="cs-add-btn" disabled>✦ 登录后可添加角色卡</button>';
+  if(csChars.length===0)h+='<div class="cs-empty">尚未创建角色卡，点击上方按钮创建。</div>';
+  else{
+    h+='<div class="cs-list" id="csList">';
+    csChars.forEach((c,i)=>{
+      const del=canEdit?`<button class="cs-mini-del" onclick="event.stopPropagation();deleteCharSheet('${c.id}','${c.avatarPath||''}')">删除</button>`:'';
+      const edit=canEdit?`<button class="cs-mini-edit" onclick="event.stopPropagation();openCsEditModal('${c.id}')">编辑</button>`:'';
+      h+=`<div class="cs-mini" data-id="${c.id}" data-idx="${i}" onclick="openCsDetail('${c.id}')" ${canEdit?'draggable="true"':''}>
+        <div class="cs-mini-grip">${canEdit?'⠿':''}</div>
+        <div class="cs-mini-avatar">${c.avatarUrl?`<img src="${c.avatarUrl}">`:'<span class="cs-mini-ph">⍟</span>'}</div>
+        <div class="cs-mini-info">
+          <div class="cs-mini-name">${esc(c.charName||'未命名')}</div>
+          <div class="cs-mini-meta">${c.moduleName?esc(c.moduleName):'—'}${c.job?' · '+esc(c.job):''}</div>
+        </div>
+        <div class="cs-mini-actions">${edit}${del}</div>
+      </div>`;
+    });
+    h+='</div>';
+  }
   body.innerHTML=h;
-  document.getElementById('csOverlay').classList.add('active');document.body.style.overflow='hidden';
+  if(canEdit&&csChars.length>1)initCsDrag();
+}
+
+let csDragEl=null;
+function initCsDrag(){
+  const list=document.getElementById('csList');if(!list)return;
+  list.addEventListener('dragstart',e=>{
+    const item=e.target.closest('.cs-mini');if(!item)return;
+    csDragEl=item;item.classList.add('cs-dragging');
+    e.dataTransfer.effectAllowed='move';
+  });
+  list.addEventListener('dragend',e=>{
+    if(csDragEl)csDragEl.classList.remove('cs-dragging');csDragEl=null;
+    document.querySelectorAll('.cs-mini').forEach(el=>el.classList.remove('cs-drag-over'));
+    saveCsOrder();
+  });
+  list.addEventListener('dragover',e=>{
+    e.preventDefault();e.dataTransfer.dropEffect='move';
+    const target=e.target.closest('.cs-mini');
+    if(!target||target===csDragEl)return;
+    const rect=target.getBoundingClientRect();
+    const mid=rect.top+rect.height/2;
+    document.querySelectorAll('.cs-mini').forEach(el=>el.classList.remove('cs-drag-over'));
+    if(e.clientY<mid)target.parentNode.insertBefore(csDragEl,target);
+    else target.parentNode.insertBefore(csDragEl,target.nextSibling);
+  });
+}
+async function saveCsOrder(){
+  const items=document.querySelectorAll('#csList .cs-mini');
+  const batch=db.batch();
+  items.forEach((el,i)=>{
+    const id=el.dataset.id;
+    batch.update(db.collection(csCollection).doc(csOwnerId).collection('characters').doc(id),{order:i});
+    const ch=csChars.find(c=>c.id===id);if(ch)ch.order=i;
+  });
+  csChars.sort((a,b)=>(a.order||0)-(b.order||0));
+  try{await batch.commit()}catch(e){console.warn('order save:',e)}
+}
+
+function openCsDetail(cid){
+  const c=csChars.find(x=>x.id===cid);if(!c)return;
+  const body=document.getElementById('csBody');
+  const canEdit=isLoggedIn();
+  body.innerHTML='<button class="cs-detail-back" onclick="renderCsList()">← 返回列表</button>'+renderOneCard(c,canEdit);
 }
 
 function renderOneCard(c,canEdit){
@@ -161,7 +225,7 @@ function renderOneCard(c,canEdit){
     </div></div>`;
 }
 
-function closeCharSheet(){document.getElementById('csOverlay').classList.remove('active');document.body.style.overflow='';csCollection=null;csOwnerId=null}
+function closeCharSheet(){document.getElementById('csOverlay').classList.remove('active');document.body.style.overflow='';csCollection=null;csOwnerId=null;csChars=[]}
 
 let csEditId=null,csPendingAvatar=null;
 function openCsEditModal(editId){
@@ -169,7 +233,6 @@ function openCsEditModal(editId){
   document.getElementById('csEditTitle').textContent=editId?'编辑角色卡':'添加角色卡';
   document.getElementById('csAvatarInfo').textContent='';document.getElementById('csAvatarInput').value='';
   if(editId){
-    // find from current view - re-fetch
     db.collection(csCollection).doc(csOwnerId).collection('characters').doc(editId).get().then(d=>{
       if(!d.exists)return;const c=d.data();
       document.getElementById('csName').value=c.charName||'';document.getElementById('csModule').value=c.moduleName||'';document.getElementById('csJob').value=c.job||'';
@@ -206,7 +269,7 @@ async function saveCharSheet(){
   try{
     if(csPendingAvatar){const p=`charsheets/${csOwnerId}/${Date.now()}.jpg`;data.avatarUrl=await uploadImg(p,csPendingAvatar);data.avatarPath=p}
     if(csEditId){await db.collection(csCollection).doc(csOwnerId).collection('characters').doc(csEditId).update(data)}
-    else{data.timestamp=firebase.firestore.FieldValue.serverTimestamp();await db.collection(csCollection).doc(csOwnerId).collection('characters').add(data)}
+    else{data.order=csChars.length;data.timestamp=firebase.firestore.FieldValue.serverTimestamp();await db.collection(csCollection).doc(csOwnerId).collection('characters').add(data)}
     closeCsEditModal();showToast('已保存');openCharSheet(csCollection,csOwnerId);
   }catch(e){showToast('失败: '+e.message)}finally{btn.disabled=false;btn.textContent='保存'}
 }

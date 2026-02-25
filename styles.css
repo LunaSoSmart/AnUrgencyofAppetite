@@ -211,6 +211,25 @@ section{padding:6rem 3rem;max-width:1200px;margin:0 auto}
 .cs-backstory-title{font-family:var(--font-display);font-size:0.6rem;letter-spacing:0.35em;color:var(--accent-dim);text-transform:uppercase;margin-bottom:1rem}
 .cs-backstory-text{font-family:'LXGW WenKai TC','Noto Serif SC',serif;font-size:1.02rem;color:var(--ivory-dim);line-height:2;white-space:pre-wrap;letter-spacing:0.02em}
 .cs-empty{text-align:center;padding:2rem;color:var(--ivory-dim);opacity:0.5;font-family:var(--font-ui);font-size:0.85rem}
+.cs-list{display:flex;flex-direction:column;gap:0.5rem}
+.cs-mini{display:flex;align-items:center;gap:1rem;padding:0.8rem 1rem;background:var(--bg-card);border:1px solid rgba(var(--ar),0.1);cursor:pointer;transition:all 0.3s;position:relative}
+.cs-mini:hover{border-color:rgba(var(--ar),0.25);background:var(--bg-card-hover);transform:translateX(4px)}
+.cs-mini-grip{font-size:1rem;color:var(--accent-dim);opacity:0.3;cursor:grab;flex-shrink:0;width:16px;text-align:center;user-select:none}
+.cs-mini:hover .cs-mini-grip{opacity:0.7}
+.cs-mini-avatar{width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(var(--ar),0.2);overflow:hidden;flex-shrink:0;background:var(--bg-deep);display:flex;align-items:center;justify-content:center}
+.cs-mini-avatar img{width:100%;height:100%;object-fit:cover}
+.cs-mini-ph{font-family:var(--font-display);font-size:1rem;color:var(--accent-dim);opacity:0.3}
+.cs-mini-info{flex:1;min-width:0}
+.cs-mini-name{font-family:var(--font-cn);font-size:1rem;font-weight:700;color:var(--ivory);line-height:1.3;margin-bottom:0.15rem}
+.cs-mini-meta{font-family:var(--font-ui);font-size:0.7rem;color:var(--ivory-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cs-mini-actions{display:flex;gap:0.4rem;flex-shrink:0;opacity:0;transition:opacity 0.3s}
+.cs-mini:hover .cs-mini-actions{opacity:1}
+.cs-mini-edit,.cs-mini-del{background:none;border:none;font-family:var(--font-ui);font-size:0.6rem;cursor:pointer;padding:0.2rem 0.4rem}
+.cs-mini-edit{color:var(--accent-dim)}.cs-mini-edit:hover{color:var(--accent)}
+.cs-mini-del{color:var(--red-blood)}.cs-mini-del:hover{color:var(--red-glow)}
+.cs-dragging{opacity:0.4;border-style:dashed}
+.cs-detail-back{font-family:var(--font-ui);font-size:0.8rem;color:var(--accent-dim);cursor:pointer;background:none;border:1px solid rgba(var(--ar),0.2);padding:0.4rem 1rem;transition:all 0.3s;margin-bottom:1.5rem;display:inline-block}
+.cs-detail-back:hover{border-color:var(--accent);color:var(--accent)}
 .cs-add-btn{display:block;width:100%;padding:0.8rem;background:transparent;border:1px dashed rgba(var(--ar),0.25);color:var(--accent-dim);font-family:var(--font-ui);font-size:0.8rem;cursor:pointer;transition:all 0.3s;margin-bottom:1.2rem}
 .cs-add-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(var(--ar),0.03)}
 .cs-add-btn:disabled{opacity:0.4;cursor:not-allowed}
