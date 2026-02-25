@@ -1,13 +1,22 @@
 # 急切的食欲 · An Urgency of Appetite
 
-A private, single-page companion site for a Call of Cthulhu TRPG group, themed after the aesthetics of *Cultist Simulator*.
+A private companion site for a Call of Cthulhu TRPG group, themed after the aesthetics of *Cultist Simulator*.
 
-Built as a single `index.html` with Firebase (Firestore + Storage) as the backend — no build step, no framework, no server.
+Built with vanilla HTML/CSS/JS and Firebase (Firestore + Storage) — no build step, no framework, no server.
+
+## Project Structure
+
+```
+├── index.html    # HTML structure and layout
+├── styles.css    # All styles, theme variables, responsive breakpoints
+├── app.js        # Application logic, Firebase ops, rendering
+└── README.md
+```
 
 ## Features
 
 ### Module Archive
-Browse the group's completed and ongoing CoC modules. Each module page contains a description, cover image, and a collection of session write-ups (articles). Articles are displayed as compact cards with thumbnails and excerpts; click any card to open a full-screen reader overlay.
+Browse the group's completed and ongoing CoC modules. Each module displays its name, description, Keeper (守秘人/KP), and article count. Click into a module to see session write-ups displayed as compact cards with thumbnails and excerpts; click any card to open a full-screen reader overlay.
 
 ### Per-Article Comments
 Every article has its own comment thread. Logged-in users can post and delete comments directly within the article reader.
@@ -22,14 +31,14 @@ Full CoC-style character sheets with eight core stats (STR, DEX, POW, CON, APP, 
 A guestbook open to both members and anonymous visitors. Guests can leave a nickname and message; members see a streamlined posting interface.
 
 ### Theme Switcher
-Four color themes inspired by Cultist Simulator's Hours, selectable from a button in the bottom-right corner:
+Four color themes inspired by Cultist Simulator's Hours, selectable from a floating button in the bottom-right corner:
 
 - **灯 · Lantern** — warm gold (default)
 - **杯 · Grail** — deep crimson
 - **启 · Knock** — dark violet
 - **冬 · Winter** — cold blue
 
-Theme preference is saved locally.
+Theme preference persists via localStorage.
 
 ### Other Details
 - Chinese body text uses LXGW WenKai (霞鹜文楷) for a handwritten, narrative feel
@@ -43,15 +52,15 @@ This site uses a **closed, invite-only login system**. There are a small number 
 
 ## Tech Stack
 
-- **Frontend:** Vanilla HTML / CSS / JS (single file, no dependencies)
+- **Frontend:** Vanilla HTML / CSS / JS (no dependencies)
 - **Backend:** Firebase Firestore (database) + Firebase Storage (images)
 - **Fonts:** Google Fonts (Cinzel, Cormorant Garamond, Noto Serif SC, Noto Sans SC, LXGW WenKai TC)
 - **Hosting:** Any static file host (Firebase Hosting, GitHub Pages, Netlify, etc.)
 
 ## Deployment
 
-1. Drop `index.html` on any static hosting service.
-2. Ensure the Firebase project credentials in the `<script>` section point to your own Firestore instance.
+1. Place `index.html`, `styles.css`, and `app.js` in the same directory on any static hosting service.
+2. Ensure the Firebase project credentials in `app.js` point to your own Firestore instance.
 3. That's it. No build, no install.
 
 ## License
