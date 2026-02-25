@@ -8,9 +8,9 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='28'>⍟</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Noto+Serif+SC:wght@300;400;600;700;900&family=Noto+Sans+SC:wght@300;400;500&family=LXGW+WenKai+TC:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
-:root,body.theme-gold{--bg-deep:#0a0908;--bg-dark:#12100e;--bg-card:#1a1714;--bg-card-hover:#221f1a;--accent:#c9a84c;--accent-dim:#8a7234;--accent-bright:#e8c95a;--ar:201,168,76;--ivory:#e8e0d0;--ivory-dim:#a89e8e;--red-blood:#6b1a1a;--red-glow:#8b2a2a;--font-display:'Cinzel','Noto Serif SC',serif;--font-body:'LXGW WenKai TC','Noto Serif SC',serif;--font-cn:'Noto Serif SC',serif;--font-ui:'Noto Sans SC',sans-serif;--theme-icon:'☀';--hero-glow1:rgba(42,74,58,0.15);--hero-glow2:rgba(107,26,26,0.1)}
+:root,body.theme-lantern{--bg-deep:#0a0908;--bg-dark:#12100e;--bg-card:#1a1714;--bg-card-hover:#221f1a;--accent:#c9a84c;--accent-dim:#8a7234;--accent-bright:#e8c95a;--ar:201,168,76;--ivory:#e8e0d0;--ivory-dim:#a89e8e;--red-blood:#6b1a1a;--red-glow:#8b2a2a;--font-display:'Cinzel','Noto Serif SC',serif;--font-body:'LXGW WenKai TC','Noto Serif SC',serif;--font-cn:'Noto Serif SC',serif;--font-ui:'Noto Sans SC',sans-serif;--hero-glow1:rgba(42,74,58,0.15);--hero-glow2:rgba(107,26,26,0.1)}
 body.theme-grail{--bg-deep:#0a0808;--bg-dark:#110e0e;--bg-card:#1a1412;--bg-card-hover:#221a17;--accent:#8c2018;--accent-dim:#5a1510;--accent-bright:#b0281e;--ar:140,32,24;--ivory:#d8cdc0;--ivory-dim:#958578;--red-blood:#5a1510;--red-glow:#8c2018;--hero-glow1:rgba(140,32,24,0.12);--hero-glow2:rgba(90,20,14,0.15)}
-body.theme-lantern{--bg-deep:#08080a;--bg-dark:#0e0e12;--bg-card:#14131a;--bg-card-hover:#1a1822;--accent:#6a28a8;--accent-dim:#3d1570;--accent-bright:#8838d0;--ar:106,40,168;--ivory:#d5cce0;--ivory-dim:#8a7e98;--red-blood:#3d1570;--red-glow:#6a28a8;--hero-glow1:rgba(106,40,168,0.12);--hero-glow2:rgba(60,20,110,0.15)}
+body.theme-knock{--bg-deep:#08080a;--bg-dark:#0e0e12;--bg-card:#14131a;--bg-card-hover:#1a1822;--accent:#6a28a8;--accent-dim:#3d1570;--accent-bright:#8838d0;--ar:106,40,168;--ivory:#d5cce0;--ivory-dim:#8a7e98;--red-blood:#3d1570;--red-glow:#6a28a8;--hero-glow1:rgba(106,40,168,0.12);--hero-glow2:rgba(60,20,110,0.15)}
 body.theme-winter{--bg-deep:#08090a;--bg-dark:#0d1014;--bg-card:#12161c;--bg-card-hover:#182028;--accent:#1868a8;--accent-dim:#0e4070;--accent-bright:#2088d0;--ar:24,104,168;--ivory:#ccd8e4;--ivory-dim:#7888a0;--red-blood:#0e4070;--red-glow:#1868a8;--hero-glow1:rgba(24,104,168,0.12);--hero-glow2:rgba(14,60,110,0.15)}
 *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
 body{background:var(--bg-deep);color:var(--ivory);font-family:var(--font-body);overflow-x:hidden;min-height:100vh;transition:background 0.5s,color 0.5s}
@@ -947,13 +947,13 @@ async function deleteGbMsg(id) {
 
 // ===== THEME =====
 const THEMES={
-  gold:{name:'金',en:'Gold',color:'#c9a84c'},
+  lantern:{name:'灯',en:'Lantern',color:'#c9a84c'},
   grail:{name:'杯',en:'Grail',color:'#8c2018'},
-  lantern:{name:'启',en:'Lantern',color:'#6a28a8'},
+  knock:{name:'启',en:'Knock',color:'#6a28a8'},
   winter:{name:'冬',en:'Winter',color:'#1868a8'}
 };
 function setTheme(t){
-  if(!THEMES[t])t='gold';
+  if(!THEMES[t])t='lantern';
   document.body.className=document.body.className.replace(/theme-\w+/g,'');
   document.body.classList.add('theme-'+t);
   try{localStorage.setItem('ua-theme',t)}catch{}
@@ -964,8 +964,8 @@ function setTheme(t){
   });
 }
 function initTheme(){
-  let t='gold';
-  try{t=localStorage.getItem('ua-theme')||'gold'}catch{}
+  let t='lantern';
+  try{t=localStorage.getItem('ua-theme')||'lantern'}catch{}
   setTheme(t);
 }
 function toggleThemePanel(){
@@ -988,9 +988,9 @@ initTheme();
 </script>
 <div class="theme-switcher">
   <div class="theme-panel" id="themePanel">
-    <div class="theme-opt" data-theme="gold" onclick="setTheme('gold')"><span class="tdot" style="background:#c9a84c"></span><span class="tname">金</span><span class="ten">Gold</span></div>
+    <div class="theme-opt" data-theme="lantern" onclick="setTheme('lantern')"><span class="tdot" style="background:#c9a84c"></span><span class="tname">灯</span><span class="ten">Lantern</span></div>
     <div class="theme-opt" data-theme="grail" onclick="setTheme('grail')"><span class="tdot" style="background:#8c2018"></span><span class="tname">杯</span><span class="ten">Grail</span></div>
-    <div class="theme-opt" data-theme="lantern" onclick="setTheme('lantern')"><span class="tdot" style="background:#6a28a8"></span><span class="tname">启</span><span class="ten">Lantern</span></div>
+    <div class="theme-opt" data-theme="knock" onclick="setTheme('knock')"><span class="tdot" style="background:#6a28a8"></span><span class="tname">启</span><span class="ten">Knock</span></div>
     <div class="theme-opt" data-theme="winter" onclick="setTheme('winter')"><span class="tdot" style="background:#1868a8"></span><span class="tname">冬</span><span class="ten">Winter</span></div>
   </div>
   <div class="theme-toggle" onclick="toggleThemePanel()" title="切换主题"><span class="dot" style="background:#c9a84c"></span></div>
