@@ -66,6 +66,7 @@ section{padding:6rem 3rem;max-width:1200px;margin:0 auto}
 .module-desc{font-family:var(--font-body);font-size:0.82rem;color:var(--ivory-dim);line-height:1.9;margin-bottom:1.5rem}
 .module-meta{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(var(--ar),0.08);padding-top:1rem}
 .module-count{font-family:var(--font-ui);font-size:0.7rem;color:var(--ivory-dim)}
+.module-kp{font-family:var(--font-ui);font-size:0.65rem;color:var(--accent-dim);letter-spacing:0.08em}
 .module-arrow{font-family:var(--font-display);font-size:0.75rem;color:var(--accent-dim);transition:all 0.3s}
 .module-card:hover .module-arrow{color:var(--accent);transform:translateX(4px)}
 .module-card-add{background:transparent;border:1px dashed rgba(var(--ar),0.2);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:200px}
@@ -80,7 +81,8 @@ section{padding:6rem 3rem;max-width:1200px;margin:0 auto}
 .detail-title-text{font-family:var(--font-cn);font-size:1.2rem;font-weight:700;color:var(--accent)}
 .detail-content{max-width:800px;margin:0 auto;padding:3rem 2rem}
 .detail-hero-title{font-family:var(--font-cn);font-size:2.5rem;font-weight:900;color:var(--accent);text-align:center;margin-bottom:1rem}
-.detail-hero-en{font-family:var(--font-display);font-size:0.8rem;letter-spacing:0.4em;color:var(--accent-dim);text-align:center;margin-bottom:3rem}
+.detail-hero-en{font-family:var(--font-display);font-size:0.8rem;letter-spacing:0.4em;color:var(--accent-dim);text-align:center;margin-bottom:1.5rem}
+.detail-hero-kp{font-family:var(--font-ui);font-size:0.75rem;color:var(--accent-dim);text-align:center;letter-spacing:0.1em;margin-bottom:3rem;opacity:0.8}
 .new-article-btn{display:block;width:100%;padding:1.2rem;background:transparent;border:1px dashed rgba(var(--ar),0.25);color:var(--accent-dim);font-family:var(--font-ui);font-size:0.85rem;cursor:pointer;transition:all 0.3s;margin-bottom:2rem}
 .new-article-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(var(--ar),0.03)}
 .new-article-btn:disabled{opacity:0.4;cursor:not-allowed}
@@ -410,6 +412,7 @@ footer{border-top:1px solid rgba(var(--ar),0.08);padding:3rem;text-align:center}
     <div class="modal-field"><label>模组名称</label><input type="text" id="newModuleName" placeholder="例：遥远的北方"></div>
     <div class="modal-field"><label>英文名称</label><input type="text" id="newModuleNameEn" placeholder="例：The Far North"></div>
     <div class="modal-field"><label>简介</label><textarea id="newModuleDesc" placeholder="模组描述..."></textarea></div>
+    <div class="modal-field"><label>守秘人 (KP)</label><input type="text" id="newModuleKp" placeholder="例：灯花"></div>
     <div class="modal-actions"><button class="btn-cancel" onclick="closeAddModuleModal()">取消</button><button class="btn-publish" onclick="saveNewModule()">创建</button></div>
   </div>
 </div>
@@ -501,9 +504,9 @@ async function deleteImg(path){try{await stRef.ref(path).delete()}catch(e){conso
 
 // ===== DEFAULTS =====
 const DEF_MODULES=[
-  {id:'orient-express',name:'东方快车上的恐怖',nameEn:'Horror on the Orient Express',desc:'横跨欧洲的列车之旅，古老的雕像碎片散落在沿途的每一座城市。旅途中潜伏的恐怖远比乘客们想象的更加深邃。',order:0},
-  {id:'king-in-yellow',name:'褴褛之王',nameEn:'The King in Yellow',desc:'黄色的面具之下隐藏着怎样的面容？在历史的夹缝与阴影中，与那位编织了无数悲剧的莎士比亚隔着时空静默对望。',order:1},
-  {id:'stubborn',name:'有些人油盐不进',nameEn:'and Some Fell On Stony Ground',desc:'理智是脆弱的壁垒，而有些灵魂却如同顽石般拒绝启示。在凡俗的执拗与深渊的凝视之间，调查员们正走向未知的结局。',order:2}
+  {id:'orient-express',name:'东方快车上的恐怖',nameEn:'Horror on the Orient Express',desc:'横跨欧洲的列车之旅，古老的雕像碎片散落在沿途的每一座城市。旅途中潜伏的恐怖远比乘客们想象的更加深邃。',kp:'灯花',order:0},
+  {id:'king-in-yellow',name:'褴褛之王',nameEn:'The King in Yellow',desc:'黄色的面具之下隐藏着怎样的面容？在历史的夹缝与阴影中，与那位编织了无数悲剧的莎士比亚隔着时空静默对望。',kp:'灯花',order:1},
+  {id:'stubborn',name:'有些人油盐不进',nameEn:'and Some Fell On Stony Ground',desc:'理智是脆弱的壁垒，而有些灵魂却如同顽石般拒绝启示。在凡俗的执拗与深渊的凝视之间，调查员们正走向未知的结局。',kp:'流奈',order:2}
 ];
 const DEF_MEMBERS=[
   {id:'m1',name:'灯花',role:'秘史',bio:'历史是时间在世界身上留下的伤疤',initial:'I',order:0},
@@ -546,7 +549,7 @@ function renderAll(){renderModules();renderTeam();renderGuests()}
 async function renderModules(){
   const g=document.getElementById('modulesGrid');let h='';
   for(let i=0;i<modules.length;i++){const m=modules[i],c=await countArticles(m.id);
-    h+=`<div class="module-card fade-in" onclick="openModule('${m.id}')"><div class="module-number">CASE FILE NO.${String(i+1).padStart(3,'0')}</div><div class="module-name">${esc(m.name)}</div><div class="module-name-en">${esc(m.nameEn)}</div><div class="module-desc">${esc(m.desc)}</div><div class="module-meta"><span class="module-count">${c} 篇记录</span><span class="module-arrow">→</span></div></div>`}
+    h+=`<div class="module-card fade-in" onclick="openModule('${m.id}')"><div class="module-number">CASE FILE NO.${String(i+1).padStart(3,'0')}</div><div class="module-name">${esc(m.name)}</div><div class="module-name-en">${esc(m.nameEn)}</div><div class="module-desc">${esc(m.desc)}</div><div class="module-meta"><span class="module-count">${c} 篇记录</span>${m.kp?`<span class="module-kp">KP · ${esc(m.kp)}</span>`:''}<span class="module-arrow">→</span></div></div>`}
   if(isLoggedIn())h+=`<div class="module-card module-card-add fade-in" onclick="openAddModuleModal()"><div class="add-icon">✦</div><div class="add-text">添加新模组</div></div>`;
   g.innerHTML=h;observeFadeIn()
 }
@@ -680,7 +683,7 @@ async function openModule(mid){
   for(const a of currentArticles){try{const s=await db.collection('modules').doc(mid).collection('articles').doc(a.id).collection('comments').get();commentCounts[a.id]=s.size}catch{commentCounts[a.id]=0}}
   const cp=isLoggedIn();
   document.getElementById('detailContent').innerHTML=`
-    <div class="detail-hero-title">${esc(mod.name)}</div><div class="detail-hero-en">${esc(mod.nameEn)}</div>
+    <div class="detail-hero-title">${esc(mod.name)}</div><div class="detail-hero-en">${esc(mod.nameEn)}</div>${mod.kp?`<div class="detail-hero-kp">守秘人 · ${esc(mod.kp)}</div>`:''}
     <button class="new-article-btn" ${cp?'onclick="toggleEditor()"':'disabled'}>${cp?'✦ 创建新条目':'✦ 登录后可创建条目'}</button>
     <div class="article-editor" id="articleEditor">
       <div class="editor-field"><label class="editor-label">标题</label><input type="text" class="editor-input" id="articleTitle" placeholder="输入文章标题..."></div>
@@ -785,11 +788,11 @@ async function deleteArticle(aid,imgPath){
 }
 
 // ===== ADD MODULE =====
-function openAddModuleModal(){if(!requireLogin())return;document.getElementById('newModuleName').value='';document.getElementById('newModuleNameEn').value='';document.getElementById('newModuleDesc').value='';document.getElementById('addModuleModal').classList.add('active')}
+function openAddModuleModal(){if(!requireLogin())return;document.getElementById('newModuleName').value='';document.getElementById('newModuleNameEn').value='';document.getElementById('newModuleDesc').value='';document.getElementById('newModuleKp').value='';document.getElementById('addModuleModal').classList.add('active')}
 function closeAddModuleModal(){document.getElementById('addModuleModal').classList.remove('active')}
 async function saveNewModule(){
   if(!requireLogin())return;const n=document.getElementById('newModuleName').value.trim();if(!n){showToast('请输入名称');return}
-  try{await db.collection('modules').doc('mod-'+Date.now()).set({name:n,nameEn:document.getElementById('newModuleNameEn').value.trim(),desc:document.getElementById('newModuleDesc').value.trim(),order:modules.length});await loadModules();closeAddModuleModal();renderModules();showToast('已创建')}catch(e){showToast('失败: '+e.message)}
+  try{await db.collection('modules').doc('mod-'+Date.now()).set({name:n,nameEn:document.getElementById('newModuleNameEn').value.trim(),desc:document.getElementById('newModuleDesc').value.trim(),kp:document.getElementById('newModuleKp').value.trim(),order:modules.length});await loadModules();closeAddModuleModal();renderModules();showToast('已创建')}catch(e){showToast('失败: '+e.message)}
 }
 
 // ===== MEMBER EDIT =====
