@@ -132,8 +132,9 @@ async function openCharSheet(col,ownerId){
   if(!owner)return;
   document.getElementById('csTitle').textContent=owner.name+' — 角色卡';
   showToast('加载中...');
-  const snap=await db.collection(col).doc(ownerId).collection('characters').orderBy('order').get();
+  const snap=await db.collection(col).doc(ownerId).collection('characters').get();
   csChars=snap.docs.map(d=>({id:d.id,...d.data()}));
+  csChars.sort((a,b)=>(a.order??999)-(b.order??999));
   renderCsList();
   document.getElementById('csOverlay').classList.add('active');document.body.style.overflow='hidden';
 }
