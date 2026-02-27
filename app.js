@@ -134,6 +134,16 @@ async function openCharSheet(col,ownerId){
   showToast('加载中...');
   const snap=await db.collection(col).doc(ownerId).collection('characters').get();
   csChars=snap.docs.map(d=>({id:d.id,...d.data()}));
+  // Migrate: add order to docs that lack it
+  const needOrder=csChars.filter(c=>c.order===undefined||c.order===null);
+  if(needOrder.length){
+    const batch=db.batch();
+    needOrder.forEach((c,i)=>{
+      c.order=csChars.length-needOrder.length+i;
+      batch.update(db.collection(col).doc(ownerId).collection('characters').doc(c.id),{order:c.order});
+    });
+    try{await batch.commit()}catch(e){console.warn('order migrate:',e)}
+  }
   csChars.sort((a,b)=>(a.order??999)-(b.order??999));
   renderCsList();
   document.getElementById('csOverlay').classList.add('active');document.body.style.overflow='hidden';
@@ -218,6 +228,7 @@ function renderOneCard(c,canEdit){
           <div class="cs-info-grid">
             <div class="cs-info-item"><span class="cs-info-label">职业</span><span class="cs-info-val">${esc(c.job||'—')}</span></div>
             <div class="cs-info-item"><span class="cs-info-label">年龄</span><span class="cs-info-val">${esc(c.age||'—')}</span></div>
+            <div class="cs-info-item"><span class="cs-info-label">时代</span><span class="cs-info-val">${esc(c.era||'—')}</span></div>
             <div class="cs-info-item"><span class="cs-info-label">住地</span><span class="cs-info-val">${esc(c.home||'—')}</span></div>
           </div></div></div>
       <div class="cs-divider"></div>
@@ -237,7 +248,7 @@ function openCsEditModal(editId){
     db.collection(csCollection).doc(csOwnerId).collection('characters').doc(editId).get().then(d=>{
       if(!d.exists)return;const c=d.data();
       document.getElementById('csName').value=c.charName||'';document.getElementById('csModule').value=c.moduleName||'';document.getElementById('csJob').value=c.job||'';
-      document.getElementById('csAge').value=c.age||'';document.getElementById('csHome').value=c.home||'';
+      document.getElementById('csAge').value=c.age||'';document.getElementById('csEra').value=c.era||'';document.getElementById('csHome').value=c.home||'';
       document.getElementById('csST').value=c.str||'';document.getElementById('csDX').value=c.dex||'';
       document.getElementById('csPW').value=c.pow||'';document.getElementById('csCN').value=c.con||'';
       document.getElementById('csAP').value=c.app||'';document.getElementById('csED').value=c.edu||'';
@@ -246,6 +257,7 @@ function openCsEditModal(editId){
     });
   } else {
     ['csName','csModule','csJob','csAge','csHome','csST','csDX','csPW','csCN','csAP','csED','csSZ','csIN','csBio'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('csEra').value='';
   }
   document.getElementById('csEditModal').classList.add('active');
 }
@@ -259,7 +271,7 @@ document.getElementById('csAvatarInput').addEventListener('change',async functio
 async function saveCharSheet(){
   if(!requireLogin())return;
   const data={charName:document.getElementById('csName').value.trim(),moduleName:document.getElementById('csModule').value.trim(),job:document.getElementById('csJob').value.trim(),
-    age:document.getElementById('csAge').value.trim(),home:document.getElementById('csHome').value.trim(),
+    age:document.getElementById('csAge').value.trim(),era:document.getElementById('csEra').value,home:document.getElementById('csHome').value.trim(),
     str:parseInt(document.getElementById('csST').value)||0,dex:parseInt(document.getElementById('csDX').value)||0,
     pow:parseInt(document.getElementById('csPW').value)||0,con:parseInt(document.getElementById('csCN').value)||0,
     app:parseInt(document.getElementById('csAP').value)||0,edu:parseInt(document.getElementById('csED').value)||0,
