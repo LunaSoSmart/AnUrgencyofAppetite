@@ -164,7 +164,7 @@ function renderCsList(){
         <div class="cs-mini-avatar">${c.avatarUrl?`<img src="${c.avatarUrl}">`:'<span class="cs-mini-ph">⍟</span>'}</div>
         <div class="cs-mini-info">
           <div class="cs-mini-name">${esc(c.charName||'未命名')}</div>
-          <div class="cs-mini-meta">${c.moduleName?esc(c.moduleName):'—'}${c.job?' · '+esc(c.job):''}</div>
+          <div class="cs-mini-meta">${c.moduleName?esc(c.moduleName):'—'}${c.era?' · '+esc(c.era):''}${c.job?' · '+esc(c.job):''}</div>
         </div>
         <div class="cs-mini-actions">${edit}${del}</div>
       </div>`;
